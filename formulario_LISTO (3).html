@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Nuevo Movimiento — Enlozadora</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Arial,sans-serif;background:#f1f5f9;color:#1e293b;min-height:100vh;padding-bottom:40px;max-width:480px;margin:0 auto}
+.hdr{background:#1a2d4a;padding:16px 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.hdr-top{display:flex;align-items:center;gap:10px}
+.hdr-icon{width:36px;height:36px;border-radius:10px;background:#ea580c;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.hdr-title{color:#fff;font-size:16px;font-weight:700}
+.hdr-sub{color:#94a3b8;font-size:12px;margin-top:2px}
+.prog-bar{margin-top:12px;height:4px;background:rgba(255,255,255,.15);border-radius:2px}
+.prog-fill{height:4px;background:#ea580c;border-radius:2px;transition:width .4s;width:0%}
+.pills{display:flex;gap:4px;padding:10px 14px;background:#fff;border-bottom:1px solid #e2e8f0;overflow-x:auto}
+.pill{flex-shrink:0;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;border:1.5px solid #e2e8f0;color:#64748b;background:#f8fafc;cursor:pointer}
+.pill.active{background:#1a2d4a;color:#fff;border-color:#1a2d4a}
+.pill.done{background:#dcfce7;color:#16a34a;border-color:#16a34a}
+.sec{display:none;padding:14px;animation:fi .3s}
+.sec.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.card-hdr{padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f1f5f9}
+.card-hdr-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.card-hdr h2{font-size:13px;font-weight:700;color:#1a2d4a}
+.card-hdr p{font-size:11px;color:#64748b;margin-top:1px}
+.fld{padding:12px 16px;border-bottom:1px solid #f8fafc}
+.fld:last-child{border:none}
+.fld label{display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.fld label .req{color:#dc2626;margin-left:2px}
+input[type=text],input[type=number],input[type=date],select,textarea{width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-family:Arial,sans-serif;font-size:15px;color:#1e293b;background:#f8fafc;outline:none;-webkit-appearance:none;appearance:none}
+input:focus,select:focus,textarea:focus{border-color:#2563eb;background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+input[type=number]{font-size:16px}
+.mwrap{position:relative}
+.mwrap::before{content:'Gs';position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:700;color:#64748b;pointer-events:none;z-index:1}
+.mwrap input{padding-left:36px}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rcard{border:2px solid #e2e8f0;border-radius:10px;padding:12px;cursor:pointer;display:flex;align-items:center;gap:8px;background:#f8fafc;transition:all .2s}
+.rcard input[type=radio]{display:none}
+.rcdot{width:18px;height:18px;border-radius:50%;border:2px solid #e2e8f0;flex-shrink:0;background:#fff;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.rcdot::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff;opacity:0;transition:opacity .2s}
+.rcicon{font-size:18px}
+.rctext{font-size:13px;font-weight:600;color:#64748b}
+.rcard.sel-blue{border-color:#2563eb;background:#dbeafe}
+.rcard.sel-blue .rcdot{background:#2563eb;border-color:#2563eb}
+.rcard.sel-blue .rcdot::after{opacity:1}
+.rcard.sel-blue .rctext{color:#2563eb}
+.rcard.sel-green{border-color:#16a34a;background:#dcfce7}
+.rcard.sel-green .rcdot{background:#16a34a;border-color:#16a34a}
+.rcard.sel-green .rcdot::after{opacity:1}
+.rcard.sel-green .rctext{color:#16a34a}
+.rcard.sel-orange{border-color:#ea580c;background:#fff7ed}
+.rcard.sel-orange .rcdot{background:#ea580c;border-color:#ea580c}
+.rcard.sel-orange .rcdot::after{opacity:1}
+.rcard.sel-orange .rctext{color:#ea580c}
+.cred-fields{display:none;background:#fff7ed;border-top:2px dashed #fed7aa;padding:12px 16px}
+.cred-fields.show{display:block}
+.cred-title{font-size:11px;font-weight:700;color:#ea580c;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.cred-fields .fld{padding:8px 0;border:none}
+.cred-fields .fld label{color:#ea580c}
+.saldo-box{background:#ea580c;border-radius:10px;padding:11px 14px;margin-top:8px;display:flex;justify-content:space-between;align-items:center}
+.saldo-box .sb-lbl{color:#fff;font-size:12px;font-weight:700}
+.saldo-box .sb-val{color:#fff;font-size:18px;font-weight:700}
+.hint{background:#dbeafe;border-radius:10px;padding:10px 12px;font-size:12px;color:#1e40af;margin:6px 14px 0;display:flex;gap:8px;align-items:flex-start}
+.hint::before{content:'ℹ️';flex-shrink:0}
+.sum-card{background:#1a2d4a;border-radius:14px;padding:16px;color:#fff;margin-bottom:12px}
+.sum-card h3{font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.sum-row:last-child{border:none}
+.sum-lbl{font-size:13px;color:#cbd5e1}
+.sum-val{font-size:13px;font-weight:700;color:#fff}
+.sum-val.hl{color:#fbbf24;font-size:15px}
+.sum-val.gr{color:#86efac}
+.sum-val.or{color:#fdba74}
+.navbtns{display:flex;gap:10px;padding:10px 14px 0;position:sticky;bottom:0;background:linear-gradient(to top,#f1f5f9 75%,transparent);padding-top:18px}
+.btn{flex:1;padding:14px;border-radius:12px;font-size:15px;font-weight:700;font-family:Arial,sans-serif;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn:active{transform:scale(.97)}
+.btn-prev{background:#fff;color:#1a2d4a;border:2px solid #e2e8f0;flex:0 0 52px}
+.btn-next{background:#2563eb;color:#fff;box-shadow:0 4px 14px rgba(37,99,235,.3)}
+.btn-send{background:#16a34a;color:#fff;box-shadow:0 4px 14px rgba(22,163,74,.3)}
+.btn-send:disabled{background:#94a3b8;box-shadow:none;cursor:not-allowed}
+.errmsg{font-size:11px;color:#dc2626;margin-top:4px;display:none}
+.errmsg.show{display:block}
+.extra-hide{display:none}
+.success{display:none;text-align:center;padding:40px 20px}
+.success.show{display:block}
+.success-icon{width:80px;height:80px;border-radius:50%;background:#dcfce7;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;font-size:42px;animation:pop .5s cubic-bezier(.175,.885,.32,1.275)}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.success h2{font-size:20px;color:#16a34a;margin-bottom:8px}
+.success p{font-size:14px;color:#64748b;line-height:1.6}
+.btn-nuevo{margin-top:22px;background:#1a2d4a;color:#fff;border:none;padding:14px 24px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:Arial,sans-serif;width:100%}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="hdr-icon">📋</div>
+    <div>
+      <div class="hdr-title">Nuevo Movimiento</div>
+      <div class="hdr-sub" id="hdr-sub">Paso 1 de 3</div>
+    </div>
+  </div>
+  <div class="prog-bar"><div class="prog-fill" id="prog"></div></div>
+</div>
+
+<div class="pills">
+  <div class="pill active" id="pill-1">1 · Datos</div>
+  <div class="pill" id="pill-2">2 · Operación</div>
+  <div class="pill" id="pill-3">3 · Confirmar</div>
+</div>
+
+<!-- PASO 1 -->
+<div class="sec active" id="step-1">
+  <div class="card">
+    <div class="card-hdr">
+      <div class="card-hdr-icon" style="background:#dbeafe">🏪</div>
+      <div><h2>Datos del movimiento</h2><p>Información básica de la operación</p></div>
+    </div>
+    <div class="fld">
+      <label>Sucursal <span class="req">*</span></label>
+      <select id="sucursal">
+        <option value="">— Seleccionar —</option>
+        <option>CAPIATA</option>
+        <option>SAN LORENZO</option>
+        <option>SANTA TERESA</option>
+        <option>LUQUE</option>
+        <option>MARIANO ROQUE ALONSO</option>
+        <option>CIUDAD DEL ESTE</option>
+        <option>ENCARNACION</option>
+        <option>FABRICA</option>
+      </select>
+      <div class="errmsg" id="e-suc">Seleccioná la sucursal</div>
+    </div>
+    <div class="fld">
+      <label>Fecha <span class="req">*</span></label>
+      <input type="date" id="fecha">
+      <div class="errmsg" id="e-fecha">Ingresá la fecha</div>
+    </div>
+    <div class="fld">
+      <label>N° de Boleta / Orden <span class="req">*</span></label>
+      <input type="text" id="boleta" placeholder="Ej: B-0045">
+      <div class="errmsg" id="e-boleta">Ingresá el número de boleta</div>
+    </div>
+    <div class="fld">
+      <label>Nombre del cliente <span class="req">*</span></label>
+      <input type="text" id="cliente" placeholder="Nombre completo">
+      <div class="errmsg" id="e-cliente">Ingresá el nombre del cliente</div>
+    </div>
+  </div>
+  <div class="navbtns">
+    <button class="btn btn-next" onclick="next(1)">Siguiente →</button>
+  </div>
+</div>
+
+<!-- PASO 2 -->
+<div class="sec" id="step-2">
+  <div class="card">
+    <div class="card-hdr">
+      <div class="card-hdr-icon" style="background:#fef3c7">⚙️</div>
+      <div><h2>Tipo de operación</h2><p>¿Enlozado o venta de producto?</p></div>
+    </div>
+    <div class="fld">
+      <label>Tipo <span class="req">*</span></label>
+      <div class="rgrid">
+        <label class="rcard" id="rc-enlozado" onclick="selTipo('enlozado',this)">
+          <input type="radio" name="tipo" value="Servicio Enlozado">
+          <span class="rcicon">🔥</span>
+          <span class="rcdot"></span>
+          <span class="rctext">Enlozado</span>
+        </label>
+        <label class="rcard" id="rc-venta" onclick="selTipo('venta',this)">
+          <input type="radio" name="tipo" value="Venta Producto">
+          <span class="rcicon">📦</span>
+          <span class="rcdot"></span>
+          <span class="rctext">Venta</span>
+        </label>
+      </div>
+      <div class="errmsg" id="e-tipo">Seleccioná el tipo</div>
+    </div>
+
+    <!-- Enlozado: descripcion libre -->
+    <div class="fld extra-hide" id="f-enlozado">
+      <label>¿Qué se va a enlozar? <span class="req">*</span></label>
+      <input type="text" id="desc-enlozado" placeholder="Ej: Parrilla tambor grande, negro">
+      <div class="errmsg" id="e-desc">Describí el artículo</div>
+    </div>
+
+    <!-- Venta: selector de producto -->
+    <div class="extra-hide" id="f-venta">
+      <div class="fld">
+        <label>Producto <span class="req">*</span></label>
+        <select id="producto" onchange="toggleOtro(this.value)">
+          <option value="">— Seleccionar producto —</option>
+          <optgroup label="Tazas y pocillos">
+            <option>Taza enlozada blanca</option>
+            <option>Taza enlozada color</option>
+            <option>Pocillo enlozado</option>
+          </optgroup>
+          <optgroup label="Platos y fuentes">
+            <option>Plato hondo enlozado</option>
+            <option>Plato playo enlozado</option>
+            <option>Fuente enlozada chica</option>
+            <option>Fuente enlozada grande</option>
+          </optgroup>
+          <optgroup label="Cacerolas">
+            <option>Cacerola enlozada chica</option>
+            <option>Cacerola enlozada mediana</option>
+            <option>Cacerola enlozada grande</option>
+            <option>Sopera enlozada</option>
+          </optgroup>
+          <optgroup label="Parrillas">
+            <option>Parrilla tambor chica</option>
+            <option>Parrilla tambor mediana</option>
+            <option>Parrilla tambor grande</option>
+          </optgroup>
+          <optgroup label="Otros">
+            <option>Jarro enlozado 1L</option>
+            <option>Jarro enlozado 2L</option>
+            <option>Asadera enlozada</option>
+            <option>Disco de arado enlozado</option>
+            <option>Balde enlozado</option>
+            <option value="otro">Otro (escribir)</option>
+          </optgroup>
+        </select>
+        <div class="errmsg" id="e-prod">Seleccioná el producto</div>
+      </div>
+      <div class="fld extra-hide" id="f-otro">
+        <label>Especificar producto</label>
+        <input type="text" id="otro-prod" placeholder="Nombre del producto">
+      </div>
+      <div class="fld">
+        <label>Cantidad <span class="req">*</span></label>
+        <input type="number" id="cantidad" placeholder="1" min="1" value="1">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr">
+      <div class="card-hdr-icon" style="background:#dcfce7">💰</div>
+      <div><h2>Condición de pago</h2><p>¿Cómo pagó el cliente?</p></div>
+    </div>
+    <div class="fld">
+      <div class="rgrid">
+        <label class="rcard" id="rc-contado" onclick="selCond('contado',this)">
+          <input type="radio" name="cond" value="Contado">
+          <span class="rcicon">✅</span>
+          <span class="rcdot"></span>
+          <span class="rctext">Contado</span>
+        </label>
+        <label class="rcard" id="rc-credito" onclick="selCond('credito',this)">
+          <input type="radio" name="cond" value="Credito">
+          <span class="rcicon">🕐</span>
+          <span class="rcdot"></span>
+          <span class="rctext">Crédito</span>
+        </label>
+      </div>
+      <div class="errmsg" id="e-cond">Seleccioná la condición</div>
+    </div>
+    <div class="fld">
+      <label>Total (Gs) <span class="req">*</span></label>
+      <div class="mwrap"><input type="number" id="total" placeholder="0" min="0" oninput="calcSaldo()"></div>
+      <div class="errmsg" id="e-total">Ingresá el monto total</div>
+    </div>
+    <div class="cred-fields" id="cred-fields">
+      <div class="cred-title">🕐 Detalle del crédito</div>
+      <div class="fld">
+        <label>Entrega inicial (Gs)</label>
+        <div class="mwrap"><input type="number" id="entrega" placeholder="0" min="0" oninput="calcSaldo()"></div>
+      </div>
+      <div class="saldo-box">
+        <span class="sb-lbl">Saldo pendiente</span>
+        <span class="sb-val" id="saldo-val">Gs 0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hint" id="hint-enlozado" style="display:none">Los servicios de enlozado van a crédito porque tienen tiempo de producción en fábrica.</div>
+  <div class="hint" id="hint-venta" style="display:none">Las ventas de productos generalmente son al contado.</div>
+
+  <div class="navbtns">
+    <button class="btn btn-prev" onclick="prev(2)">←</button>
+    <button class="btn btn-next" onclick="next(2)">Siguiente →</button>
+  </div>
+</div>
+
+<!-- PASO 3 -->
+<div class="sec" id="step-3">
+  <div class="sum-card">
+    <h3>Resumen del movimiento</h3>
+    <div class="sum-row"><span class="sum-lbl">Sucursal</span><span class="sum-val" id="s-suc">—</span></div>
+    <div class="sum-row"><span class="sum-lbl">Fecha</span><span class="sum-val" id="s-fecha">—</span></div>
+    <div class="sum-row"><span class="sum-lbl">N° Boleta</span><span class="sum-val" id="s-boleta">—</span></div>
+    <div class="sum-row"><span class="sum-lbl">Cliente</span><span class="sum-val" id="s-cliente">—</span></div>
+    <div class="sum-row"><span class="sum-lbl">Tipo</span><span class="sum-val" id="s-tipo">—</span></div>
+    <div class="sum-row"><span class="sum-lbl">Producto / Descripción</span><span class="sum-val" id="s-desc">—</span></div>
+    <div class="sum-row" id="s-row-cant" style="display:none"><span class="sum-lbl">Cantidad</span><span class="sum-val" id="s-cant">—</span></div>
+    <div class="sum-row"><span class="sum-lbl">Condición</span><span class="sum-val" id="s-cond">—</span></div>
+    <div class="sum-row"><span class="sum-lbl">Total</span><span class="sum-val hl" id="s-total">—</span></div>
+    <div class="sum-row" id="s-row-ent" style="display:none"><span class="sum-lbl">Entrega inicial</span><span class="sum-val gr" id="s-ent">—</span></div>
+    <div class="sum-row" id="s-row-sal" style="display:none"><span class="sum-lbl">Saldo pendiente</span><span class="sum-val or" id="s-sal">—</span></div>
+  </div>
+  <div class="card">
+    <div class="fld">
+      <label>Observaciones (opcional)</label>
+      <textarea id="obs" rows="3" placeholder="Cualquier detalle adicional..." style="resize:none"></textarea>
+    </div>
+  </div>
+  <div class="navbtns">
+    <button class="btn btn-prev" onclick="prev(3)">←</button>
+    <button class="btn btn-send" id="btn-send" onclick="enviar()">✅ Enviar movimiento</button>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success" id="success">
+  <div class="success-icon">✅</div>
+  <h2>¡Movimiento registrado!</h2>
+  <p>Los datos fueron enviados correctamente a administración.</p>
+  <button class="btn-nuevo" onclick="resetForm()">📋 Registrar otro movimiento</button>
+</div>
+
+<script>
+// ══ PEGÁ TU URL ACÁ ══════════════════════════════════════════
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbybEYcKorl2qaTAemjxUQE0_AkA5K-7heSOTKFF85m3QM9L6tEkrsZo8E-k5zoRYRwh/exec";
+// ═════════════════════════════════════════════════════════════
+
+var step = 1;
+var tipo = '';
+document.getElementById('fecha').valueAsDate = new Date();
+
+function goTo(n) {
+  document.getElementById('step-'+step).classList.remove('active');
+  document.getElementById('pill-'+step).classList.remove('active');
+  document.getElementById('pill-'+step).classList.add('done');
+  step = n;
+  document.getElementById('step-'+step).classList.add('active');
+  document.getElementById('pill-'+step).classList.add('active');
+  document.getElementById('pill-'+step).classList.remove('done');
+  document.getElementById('prog').style.width = ((step-1)/2*100)+'%';
+  document.getElementById('hdr-sub').textContent = 'Paso '+step+' de 3';
+  window.scrollTo(0,0);
+}
+function next(n) { if(validate(n)) { if(n===2) buildSummary(); goTo(n+1); } }
+function prev(n) { goTo(n-1); }
+
+function selTipo(t, el) {
+  document.querySelectorAll('input[name="tipo"]').forEach(function(r){ r.closest('.rcard').classList.remove('sel-blue'); });
+  el.classList.add('sel-blue');
+  el.querySelector('input').checked = true;
+  tipo = t;
+  document.getElementById('f-enlozado').style.display = t==='enlozado'?'block':'none';
+  document.getElementById('f-venta').style.display    = t==='venta'?'block':'none';
+  document.getElementById('hint-enlozado').style.display = t==='enlozado'?'flex':'none';
+  document.getElementById('hint-venta').style.display    = t==='venta'?'flex':'none';
+  if(t==='enlozado') selCond('credito', document.getElementById('rc-credito'));
+  else               selCond('contado', document.getElementById('rc-contado'));
+}
+
+function selCond(c, el) {
+  document.querySelectorAll('input[name="cond"]').forEach(function(r){ r.closest('.rcard').classList.remove('sel-green','sel-orange'); });
+  el.classList.add(c==='contado'?'sel-green':'sel-orange');
+  el.querySelector('input').checked = true;
+  document.getElementById('cred-fields').className = 'cred-fields'+(c==='credito'?' show':'');
+  calcSaldo();
+}
+
+function toggleOtro(v) {
+  document.getElementById('f-otro').style.display = v==='otro'?'block':'none';
+}
+
+function calcSaldo() {
+  var t = parseFloat(document.getElementById('total').value)||0;
+  var e = parseFloat(document.getElementById('entrega').value)||0;
+  document.getElementById('saldo-val').textContent = 'Gs '+Math.max(0,t-e).toLocaleString('es-PY');
+}
+
+function getDesc() {
+  if(tipo==='enlozado') return document.getElementById('desc-enlozado').value;
+  var s = document.getElementById('producto').value;
+  return s==='otro' ? document.getElementById('otro-prod').value : s;
+}
+
+function fmt(n) { return 'Gs '+(parseFloat(n)||0).toLocaleString('es-PY'); }
+function fmtD(d) { if(!d) return '—'; var p=d.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
+
+function show(id){ var e=document.getElementById(id); if(e) e.classList.add('show'); }
+function hide(id){ var e=document.getElementById(id); if(e) e.classList.remove('show'); }
+
+function validate(n) {
+  var ok = true;
+  if(n===1){
+    if(!document.getElementById('sucursal').value){show('e-suc');ok=false;}else hide('e-suc');
+    if(!document.getElementById('fecha').value){show('e-fecha');ok=false;}else hide('e-fecha');
+    if(!document.getElementById('boleta').value.trim()){show('e-boleta');ok=false;}else hide('e-boleta');
+    if(!document.getElementById('cliente').value.trim()){show('e-cliente');ok=false;}else hide('e-cliente');
+  }
+  if(n===2){
+    if(!document.querySelector('input[name="tipo"]:checked')){show('e-tipo');ok=false;}else hide('e-tipo');
+    if(tipo==='enlozado'&&!document.getElementById('desc-enlozado').value.trim()){show('e-desc');ok=false;}else hide('e-desc');
+    if(tipo==='venta'&&!document.getElementById('producto').value){show('e-prod');ok=false;}else hide('e-prod');
+    if(!document.querySelector('input[name="cond"]:checked')){show('e-cond');ok=false;}else hide('e-cond');
+    if(!document.getElementById('total').value){show('e-total');ok=false;}else hide('e-total');
+  }
+  return ok;
+}
+
+function buildSummary() {
+  var cond = document.querySelector('input[name="cond"]:checked');
+  var tipoEl = document.querySelector('input[name="tipo"]:checked');
+  var isCred = cond && cond.value==='Credito';
+  var total = parseFloat(document.getElementById('total').value)||0;
+  var entrega = parseFloat(document.getElementById('entrega').value)||0;
+  document.getElementById('s-suc').textContent    = document.getElementById('sucursal').value;
+  document.getElementById('s-fecha').textContent  = fmtD(document.getElementById('fecha').value);
+  document.getElementById('s-boleta').textContent = document.getElementById('boleta').value;
+  document.getElementById('s-cliente').textContent= document.getElementById('cliente').value;
+  document.getElementById('s-tipo').textContent   = tipoEl?tipoEl.value:'—';
+  document.getElementById('s-desc').textContent   = getDesc()||'—';
+  document.getElementById('s-cond').textContent   = cond?cond.value:'—';
+  document.getElementById('s-total').textContent  = fmt(total);
+  var rc = document.getElementById('s-row-cant');
+  if(tipo==='venta'){ rc.style.display='flex'; document.getElementById('s-cant').textContent=document.getElementById('cantidad').value+' unid.'; }
+  else rc.style.display='none';
+  document.getElementById('s-row-ent').style.display = isCred?'flex':'none';
+  document.getElementById('s-row-sal').style.display = isCred?'flex':'none';
+  if(isCred){
+    document.getElementById('s-ent').textContent = fmt(entrega);
+    document.getElementById('s-sal').textContent = fmt(Math.max(0,total-entrega));
+  }
+}
+
+async function enviar() {
+  var btn = document.getElementById('btn-send');
+  btn.textContent='⏳ Enviando...'; btn.disabled=true;
+  var cond = document.querySelector('input[name="cond"]:checked');
+  var tipoEl = document.querySelector('input[name="tipo"]:checked');
+  var total = parseFloat(document.getElementById('total').value)||0;
+  var entrega = parseFloat(document.getElementById('entrega').value)||0;
+  var payload = {
+    tipo_formulario:"movimiento",
+    sucursal:document.getElementById('sucursal').value,
+    fecha:document.getElementById('fecha').value,
+    boleta:document.getElementById('boleta').value,
+    cliente:document.getElementById('cliente').value,
+    tipo:tipoEl?tipoEl.value:'',
+    descripcion:getDesc(),
+    cantidad:document.getElementById('cantidad')?document.getElementById('cantidad').value:1,
+    condicion:cond?cond.value:'',
+    total:total,
+    entrega:entrega,
+    observaciones:document.getElementById('obs').value
+  };
+  try {
+    await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    document.getElementById('step-'+step).classList.remove('active');
+    document.getElementById('success').classList.add('show');
+    window.scrollTo(0,0);
+  } catch(err) {
+    btn.textContent='✅ Enviar movimiento'; btn.disabled=false;
+    alert('Error al enviar. Revisá tu conexión e intentá de nuevo.');
+  }
+}
+
+function resetForm() {
+  document.getElementById('success').classList.remove('show');
+  ['pill-1','pill-2','pill-3'].forEach(function(id,i){
+    var p=document.getElementById(id);
+    p.classList.remove('active','done');
+    if(i===0) p.classList.add('active');
+  });
+  document.getElementById('step-1').classList.add('active');
+  step=1; tipo='';
+  ['boleta','cliente','desc-enlozado','total','entrega','obs','otro-prod'].forEach(function(id){
+    var e=document.getElementById(id); if(e) e.value='';
+  });
+  document.getElementById('cantidad').value='1';
+  document.getElementById('fecha').valueAsDate=new Date();
+  document.querySelectorAll('.rcard').forEach(function(c){c.classList.remove('sel-blue','sel-green','sel-orange');});
+  document.querySelectorAll('input[type=radio]').forEach(function(r){r.checked=false;});
+  document.getElementById('cred-fields').className='cred-fields';
+  document.getElementById('saldo-val').textContent='Gs 0';
+  document.getElementById('f-enlozado').style.display='none';
+  document.getElementById('f-venta').style.display='none';
+  document.getElementById('f-otro').style.display='none';
+  document.getElementById('hint-enlozado').style.display='none';
+  document.getElementById('hint-venta').style.display='none';
+  document.getElementById('producto').value='';
+  document.getElementById('prog').style.width='0%';
+  document.getElementById('hdr-sub').textContent='Paso 1 de 3';
+  var btn=document.getElementById('btn-send');
+  btn.textContent='✅ Enviar movimiento'; btn.disabled=false;
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
