@@ -326,7 +326,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 
 <script>
 // ══ PEGÁ TU URL ACÁ ══════════════════════════════════════════
-var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqGyv24yIb-fnLOk7kJaZhREASISv7EsBeU4roAKLyuxYn4TEMzkfkNv6aAHgxGzZFdg/exec";
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbybEYcKorl2qaTAemjxUQE0_AkA5K-7heSOTKFF85m3QM9L6tEkrsZo8E-k5zoRYRwh/exec";
 // ═════════════════════════════════════════════════════════════
 
 var step = 1;
@@ -441,7 +441,7 @@ async function enviar() {
   var tipoEl = document.querySelector('input[name="tipo"]:checked');
   var total = parseFloat(document.getElementById('total').value)||0;
   var entrega = parseFloat(document.getElementById('entrega').value)||0;
-  var payload = {
+  var params = new URLSearchParams({
     tipo_formulario:"movimiento",
     sucursal:document.getElementById('sucursal').value,
     fecha:document.getElementById('fecha').value,
@@ -454,9 +454,13 @@ async function enviar() {
     total:total,
     entrega:entrega,
     observaciones:document.getElementById('obs').value
-  };
+  });
   try {
-    await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    var response = await fetch(SCRIPT_URL, {
+      method:'POST',
+      mode:'no-cors',
+      body: params
+    });
     document.getElementById('step-'+step).classList.remove('active');
     document.getElementById('success').classList.add('show');
     window.scrollTo(0,0);
