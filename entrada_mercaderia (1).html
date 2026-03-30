@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Entrada de Mercadería — Enlozadora</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Arial,sans-serif;background:#f1f5f9;color:#1e293b;min-height:100vh;padding-bottom:80px;max-width:480px;margin:0 auto}
+.hdr{background:linear-gradient(135deg,#1a2d4a 0%,#117A65 100%);padding:16px 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.hdr-top{display:flex;align-items:center;gap:10px}
+.hdr-icon{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.hdr-title{color:#fff;font-size:16px;font-weight:700}
+.hdr-sub{color:rgba(255,255,255,.7);font-size:12px;margin-top:2px}
+.total-bar{background:rgba(255,255,255,.15);padding:6px 12px;border-radius:8px;margin-top:10px;display:flex;justify-content:space-between;align-items:center}
+.total-bar span{color:rgba(255,255,255,.8);font-size:11px}
+.total-bar strong{color:#fff;font-size:14px;font-weight:700}
+.info-banner{background:#D1FAE5;border-left:4px solid #16a34a;padding:12px 16px;margin:12px 14px;border-radius:8px;font-size:12px;color:#065F46;font-weight:600;line-height:1.6}
+.card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;overflow:hidden;margin:10px 14px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.card-hdr{padding:11px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f1f5f9}
+.card-hdr-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.card-hdr h2{font-size:13px;font-weight:700;color:#1a2d4a}
+.card-hdr .badge{margin-left:auto;background:#117A65;color:#fff;border-radius:20px;padding:2px 9px;font-size:11px;font-weight:700}
+.fld{padding:11px 16px;border-bottom:1px solid #f8fafc}
+.fld:last-child{border:none}
+.fld label{display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.fld label .req{color:#dc2626;margin-left:2px}
+input[type=text],input[type=date],input[type=number],select,textarea{width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-family:Arial,sans-serif;font-size:15px;color:#1e293b;background:#f8fafc;outline:none;-webkit-appearance:none;appearance:none}
+input:focus,select:focus,textarea:focus{border-color:#117A65;background:#fff;box-shadow:0 0 0 3px rgba(17,122,101,.1)}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
+.cat-title{padding:8px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;justify-content:space-between}
+.cat-badge{border-radius:20px;padding:2px 9px;font-size:11px;font-weight:700}
+.prod-row{display:flex;align-items:center;padding:9px 16px;border-bottom:1px solid #f8fafc;gap:10px}
+.prod-row:last-child{border:none}
+.prod-name{flex:1;font-size:12px;font-weight:600;color:#1a2d4a;line-height:1.3}
+.qty-wrap{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.qty-btn{width:30px;height:30px;border-radius:7px;border:none;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.qty-btn.minus{background:#fee2e2;color:#dc2626}
+.qty-btn.plus{background:#dcfce7;color:#16a34a}
+.qty-btn:active{transform:scale(.88)}
+.qty-input{width:46px;height:32px;border:1.5px solid #e2e8f0;border-radius:7px;text-align:center;font-size:15px;font-weight:700;color:#1a2d4a;font-family:Arial,sans-serif;background:#fff;outline:none}
+.qty-input:focus{border-color:#117A65}
+.qty-input.has-val{background:#f0fdf4;border-color:#16a34a;color:#16a34a}
+.resumen-card{background:#1a2d4a;border-radius:14px;padding:16px;margin:10px 14px}
+.resumen-card h3{font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.resumen-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.resumen-row:last-child{border:none}
+.resumen-lbl{font-size:12px;color:#cbd5e1}
+.resumen-val{font-size:13px;font-weight:700;color:#86efac}
+.total-box{background:rgba(17,122,101,.4);border-radius:10px;padding:12px;margin-top:10px;display:flex;justify-content:space-between;align-items:center}
+.total-box span{font-size:13px;color:#a7f3d0;font-weight:600}
+.total-box strong{font-size:22px;color:#fff}
+.navbtns{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;display:flex;gap:10px;padding:12px 14px;background:rgba(241,245,249,.97);backdrop-filter:blur(8px);border-top:1px solid #e2e8f0;z-index:50}
+.btn-send{flex:1;padding:14px;border-radius:12px;font-size:15px;font-weight:700;font-family:Arial,sans-serif;border:none;cursor:pointer;background:#117A65;color:#fff;box-shadow:0 4px 14px rgba(17,122,101,.35)}
+.btn-send:disabled{background:#94a3b8;box-shadow:none;cursor:not-allowed}
+.errmsg{font-size:11px;color:#dc2626;margin-top:4px;display:none}
+.errmsg.show{display:block}
+.success{display:none;text-align:center;padding:60px 20px}
+.success.show{display:block}
+.success-icon{width:80px;height:80px;border-radius:50%;background:#dcfce7;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;font-size:42px;animation:pop .5s cubic-bezier(.175,.885,.32,1.275)}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.success h2{font-size:20px;color:#16a34a;margin-bottom:8px}
+.success p{font-size:14px;color:#64748b;line-height:1.6}
+.btn-nuevo{margin-top:22px;background:#1a2d4a;color:#fff;border:none;padding:14px 24px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:Arial,sans-serif;width:100%}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="hdr-icon">📦</div>
+    <div>
+      <div class="hdr-title">Entrada de Mercadería</div>
+      <div class="hdr-sub">Registrar productos que llegaron de fábrica</div>
+    </div>
+  </div>
+  <div class="total-bar">
+    <span>Total unidades a ingresar:</span>
+    <strong id="grand-total">0 unidades</strong>
+  </div>
+</div>
+
+<div class="info-banner">
+  📦 Usá este formulario cada vez que llega mercadería de fábrica.<br>
+  Solo cargá los productos que llegaron hoy.<br>
+  El stock se suma automáticamente.
+</div>
+
+<!-- DATOS BÁSICOS -->
+<div class="card">
+  <div class="card-hdr">
+    <div class="card-hdr-icon" style="background:#d1fae5">🏪</div>
+    <h2>Datos del ingreso</h2>
+  </div>
+  <div class="fld">
+    <label>Sucursal que recibe <span class="req">*</span></label>
+    <select id="sucursal">
+      <option value="">— Seleccionar —</option>
+      <option>CAPIATA</option>
+      <option>SAN LORENZO</option>
+      <option>SANTA TERESA</option>
+      <option>LUQUE</option>
+      <option>MARIANO ROQUE ALONSO</option>
+      <option>CIUDAD DEL ESTE</option>
+      <option>ENCARNACION</option>
+      <option>FABRICA</option>
+    </select>
+    <div class="errmsg" id="e-suc">Seleccioná la sucursal</div>
+  </div>
+  <div class="fld">
+    <label>Fecha de llegada <span class="req">*</span></label>
+    <input type="date" id="fecha">
+  </div>
+  <div class="fld">
+    <label>N° de remito / referencia</label>
+    <input type="text" id="remito" placeholder="Ej: REM-001">
+  </div>
+  <div class="fld">
+    <label>Encargada que recibe</label>
+    <input type="text" id="encargada" placeholder="Tu nombre">
+  </div>
+  <div class="fld">
+    <label>Observaciones</label>
+    <textarea id="obs" rows="2" placeholder="Ej: Llegó con bulto dañado, faltó 1 unidad..." style="resize:none"></textarea>
+  </div>
+</div>
+
+<!-- PRODUCTOS -->
+<div id="productos-container"></div>
+
+<!-- RESUMEN -->
+<div class="resumen-card" id="resumen-card">
+  <h3>Resumen del ingreso</h3>
+  <div id="resumen-rows"><div style="color:#94a3b8;font-size:12px;padding:4px 0">Aún no hay productos cargados</div></div>
+  <div class="total-box">
+    <span>TOTAL UNIDADES</span>
+    <strong id="total-resumen">0</strong>
+  </div>
+</div>
+
+<div class="navbtns">
+  <button class="btn-send" id="btn-send" onclick="enviar()">✅ Registrar entrada de mercadería</button>
+</div>
+
+<div class="success" id="success">
+  <div class="success-icon">📦</div>
+  <h2>¡Mercadería registrada!</h2>
+  <p>El stock fue actualizado correctamente.<br>Los productos ya aparecen en el inventario.</p>
+  <button class="btn-nuevo" onclick="resetForm()">📦 Registrar otra entrada</button>
+</div>
+
+<script>
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwiN36gQ0LMzlmXMJzTor1MChO1HjIR9Sb_wiULEfaSbjpupLXq6V1tvjoLsZakwBdu/exec";
+
+var categorias = [
+  {
+    id:"parrillas",icon:"🔥",nombre:"Parrillas",color:"FEF3C7",tc:"92400E",
+    productos:["Parrilla Tambor Chica - Mesada Madera","Parrilla Tambor Mediana - Mesada Madera","Parrilla Tambor Mediana - Mesada Chapa","Parrilla Tambor Grande Normal","Parrilla Tambor Grande Premium","Parrilla Medio Tambor","Parrilla Medio Tambor con Rueditas","Parrilla Circular 50cm sin Ruedas","Parrilla Circular 50cm con Ruedas","Parrilla de Piso Club Libertad","Parrilla de Piso Club Guaraní","Parrilla de Piso Club Olimpia","Parrilla de Piso Club Cerro","Parrilla de Piso Club Luque","Parrilla 40cm altura 83cm","Parrilla 40cm 3 Patas con Porta Costillar","Parrillita de Mesa Carbonera 20x26","Parrillita de Mesa Carbonera 39x29","Parrillita de Mesa Verde con Marrón","Fogonero Chico 30cm","Fogonero Mediano 54cm","Fogonero Grande 59cm","Fogonero Cuadrado con Accesorios"]
+  },
+  {
+    id:"kit",icon:"🛠️",nombre:"Kit Parrillero",color:"DBEAFE",tc:"1E40AF",
+    productos:["Palita (modelo nuevo)","Atizador (modelo nuevo)","Pinza para Carbón","Combo Parrillero","Smasher 10cm","Smasher 11cm","Smasher 12cm","Espadín 72cm","Espumadera","Cucharón"]
+  },
+  {
+    id:"bandejas",icon:"🍳",nombre:"Bandejas y Asaderas",color:"D1FAE5",tc:"065F46",
+    productos:["Asadera 23x33","Asadera 30x21","Asadera 41x31","Asadera 46x59","Asadera 59x46","Bandeja 22x22","Bandeja 25x25","Bandeja 27x27","Bandeja Rica 37x21","Bandeja 35x29","Bandeja 40x40","Bandeja 40x51","Bandeja 44x30","Bandeja 49x39","Bandeja 50x50","Bandeja 60x40","Bandeja 60x45","Bandeja Panadera 59x70","Bandeja Panadera 70x58","Budinera 25x13","Budinera 30x12","Budinera 35x10","Budinera 36x11","Budinera 23x13","Bandeja Pizzera 29cm","Bandeja Pizzera 31cm","Bandeja para Donas 35x26","Molde Cupcake","Chupinera Individual","Chupinera 21x27","Chupinera 35x26","Chupinera 36x26","Chupinera 60x40","Plancheta Mini 18x12","Plancheta 40x18","Plancheta 45x30","Plancheta 46x30","Plancheta 50x26","Provoletera","Wok 32cm","Wok 36cm","Colador 26cm","Ensaladera","Bowl con Tapa","Cazuelita 15cm"]
+  },
+  {
+    id:"discos",icon:"⚫",nombre:"Discos y Paelleras",color:"FCE7F3",tc:"831843",
+    productos:["Disco 35cm","Disco 51cm sin Tapa","Disco 51cm con Tapa","Disco 52cm","Disco 53cm","Disco 58x58 con Tapa","Disco 81cm (Arado)","Paellera Personal 16cm","Paellera 35cm con Tapa","Paellera 50cm","Soporte para Disco","Porta Costillar"]
+  },
+  {
+    id:"jarritos",icon:"☕",nombre:"Jarritos y Jarras",color:"E0E7FF",tc:"3730A3",
+    productos:["Jarrito N°8 sin Diseño","Jarrito N°8 con Diseño","Jarrito N°9 sin Diseño","Jarrito N°9 con Diseño","Jarrito N°10 sin Diseño","Jarrito N°10 con Diseño","Jarra 1 Litro sin Diseño","Jarra 1 Litro con Diseño","Lechera","Materito","Chopera sin Diseño","Chopera con Diseño","Compotera","Salserito Chico","Salserito Grande"]
+  },
+  {
+    id:"platos",icon:"🍽️",nombre:"Platos",color:"FEE2E2",tc:"991B1B",
+    productos:["Plato Hondo 23cm","Plato Hondo 25cm","Plato Hondo 28cm","Plato Playo 23cm","Plato Playo 25cm","Plato Playo 28cm","Plato para Asado grande","Platito 15cm","Plato Nidal con Salsero","Plato Olimpia 23cm"]
+  },
+  {
+    id:"tazas",icon:"🫖",nombre:"Tazas",color:"F0FDF4",tc:"14532D",
+    productos:["Taza Enlozada sin Diseño","Taza Enlozada con Diseño"]
+  },
+  {
+    id:"carteles",icon:"🪧",nombre:"Carteles y Decoración",color:"FDF4FF",tc:"6B21A8",
+    productos:["Cartel Parrilla 100% Paraguaya","Cartel Coca Cola","Cartel El Mejor Asado lo Hace mi Papá","Cartel Asado otros modelos","Cartel para Jardín grande","Cartelito para Jardín pequeño","Cartel WiFi","Cartel Sanitario","Cartel Harley Davidson","Cuadro Quincho 20x20","Cuadro Quincho 30x20","Cuadro Quincho 40x30","Crucifijo Oxidado","Porta Llaves diseño Búho","Porta Espiral","Porta Velas","Porta Servilletas","Porta Plato","Base de Madera para Parrilla","Tabla de Madera para Picar","Trípode","Delantal de Jeans"]
+  }
+];
+
+function buildForm() {
+  var container = document.getElementById('productos-container');
+  categorias.forEach(function(cat) {
+    var card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML =
+      '<div class="card-hdr" style="background:#'+cat.color+'">' +
+        '<div class="card-hdr-icon" style="background:rgba(0,0,0,.1)">' + cat.icon + '</div>' +
+        '<h2 style="color:#'+cat.tc+'">' + cat.nombre + '</h2>' +
+        '<span class="badge" id="badge-'+cat.id+'" style="background:#'+cat.tc+'">0</span>' +
+      '</div>';
+    cat.productos.forEach(function(prod, idx) {
+      var id = cat.id+'_'+idx;
+      var row = document.createElement('div');
+      row.className = 'prod-row';
+      row.innerHTML =
+        '<span class="prod-name">' + prod + '</span>' +
+        '<div class="qty-wrap">' +
+          '<button class="qty-btn minus" onclick="chg(\''+id+'\', -1)">−</button>' +
+          '<input class="qty-input" type="number" id="'+id+'" value="0" min="0" oninput="upd()">' +
+          '<button class="qty-btn plus" onclick="chg(\''+id+'\', 1)">+</button>' +
+        '</div>';
+      card.appendChild(row);
+    });
+    container.appendChild(card);
+  });
+}
+
+function chg(id, d) {
+  var el = document.getElementById(id);
+  el.value = Math.max(0, (parseInt(el.value)||0) + d);
+  upd();
+}
+
+function getV(id) { return parseInt(document.getElementById(id).value)||0; }
+
+function upd() {
+  var grand = 0;
+  var resumenRows = '';
+  categorias.forEach(function(cat) {
+    var catTot = 0;
+    cat.productos.forEach(function(prod, idx) {
+      var v = getV(cat.id+'_'+idx);
+      catTot += v;
+      var el = document.getElementById(cat.id+'_'+idx);
+      el.className = 'qty-input' + (v>0?' has-val':'');
+      if(v > 0) resumenRows += '<div class="resumen-row"><span class="resumen-lbl">'+prod+'</span><span class="resumen-val">+'+v+' unid.</span></div>';
+    });
+    grand += catTot;
+    document.getElementById('badge-'+cat.id).textContent = catTot;
+  });
+  document.getElementById('grand-total').textContent = grand + ' unidades';
+  document.getElementById('total-resumen').textContent = grand;
+  document.getElementById('resumen-rows').innerHTML = resumenRows || '<div style="color:#94a3b8;font-size:12px;padding:4px 0">Aún no hay productos cargados</div>';
+}
+
+async function enviar() {
+  if(!document.getElementById('sucursal').value) {
+    document.getElementById('e-suc').classList.add('show');
+    window.scrollTo(0,0); return;
+  }
+  document.getElementById('e-suc').classList.remove('show');
+
+  var totalUnidades = 0;
+  categorias.forEach(function(cat) {
+    cat.productos.forEach(function(_,idx) { totalUnidades += getV(cat.id+'_'+idx); });
+  });
+  if(totalUnidades === 0) { alert('Tenés que ingresar al menos 1 unidad de algún producto.'); return; }
+
+  var btn = document.getElementById('btn-send');
+  btn.textContent = '⏳ Registrando...'; btn.disabled = true;
+
+  var productos = {};
+  categorias.forEach(function(cat) {
+    cat.productos.forEach(function(prod, idx) {
+      var v = getV(cat.id+'_'+idx);
+      if(v > 0) productos[prod] = v;
+    });
+  });
+
+  var params = new URLSearchParams({
+    tipo_formulario: "entrada_mercaderia",
+    sucursal: document.getElementById('sucursal').value,
+    fecha: document.getElementById('fecha').value,
+    remito: document.getElementById('remito').value,
+    encargada: document.getElementById('encargada').value,
+    observaciones: document.getElementById('obs').value,
+    productos_json: JSON.stringify(productos)
+  });
+
+  try {
+    await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body:params });
+    document.querySelectorAll('.card, .info-banner, .resumen-card').forEach(function(el){ el.style.display='none'; });
+    document.querySelector('.navbtns').style.display='none';
+    document.querySelector('.total-bar').style.display='none';
+    document.getElementById('success').classList.add('show');
+    window.scrollTo(0,0);
+  } catch(err) {
+    btn.textContent = '✅ Registrar entrada de mercadería';
+    btn.disabled = false;
+    alert('Error al enviar. Revisá tu conexión e intentá de nuevo.');
+  }
+}
+
+function resetForm() {
+  document.getElementById('success').classList.remove('show');
+  document.querySelectorAll('.card, .info-banner, .resumen-card').forEach(function(el){ el.style.display=''; });
+  document.querySelector('.navbtns').style.display='';
+  document.querySelector('.total-bar').style.display='';
+  document.getElementById('sucursal').value='';
+  document.getElementById('fecha').valueAsDate = new Date();
+  document.getElementById('remito').value='';
+  document.getElementById('encargada').value='';
+  document.getElementById('obs').value='';
+  document.querySelectorAll('.qty-input').forEach(function(el){ el.value=0; el.className='qty-input'; });
+  document.querySelectorAll('.badge').forEach(function(el){ el.textContent='0'; });
+  document.getElementById('grand-total').textContent='0 unidades';
+  document.getElementById('total-resumen').textContent='0';
+  document.getElementById('resumen-rows').innerHTML='<div style="color:#94a3b8;font-size:12px;padding:4px 0">Aún no hay productos cargados</div>';
+  var btn=document.getElementById('btn-send'); btn.textContent='✅ Registrar entrada de mercadería'; btn.disabled=false;
+  window.scrollTo(0,0);
+}
+
+document.getElementById('fecha').valueAsDate = new Date();
+buildForm();
+</script>
+</body>
+</html>
