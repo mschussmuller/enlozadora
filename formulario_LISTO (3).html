@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -115,7 +114,6 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </div>
 
 <!-- PASO 1 -->
-
 <div class="sec active" id="step-1">
   <div class="card">
     <div class="card-hdr">
@@ -159,7 +157,6 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </div>
 
 <!-- PASO 2 -->
-
 <div class="sec" id="step-2">
   <div class="card">
     <div class="card-hdr">
@@ -185,64 +182,61 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
       <div class="errmsg" id="e-tipo">Seleccioná el tipo</div>
     </div>
 
-```
-<!-- Enlozado: descripcion libre -->
-<div class="fld extra-hide" id="f-enlozado">
-  <label>¿Qué se va a enlozar? <span class="req">*</span></label>
-  <input type="text" id="desc-enlozado" placeholder="Ej: Parrilla tambor grande, negro">
-  <div class="errmsg" id="e-desc">Describí el artículo</div>
-</div>
+    <!-- Enlozado: descripcion libre -->
+    <div class="fld extra-hide" id="f-enlozado">
+      <label>¿Qué se va a enlozar? <span class="req">*</span></label>
+      <input type="text" id="desc-enlozado" placeholder="Ej: Parrilla tambor grande, negro">
+      <div class="errmsg" id="e-desc">Describí el artículo</div>
+    </div>
 
-<!-- Venta: selector de producto -->
-<div class="extra-hide" id="f-venta">
-  <div class="fld">
-    <label>Producto <span class="req">*</span></label>
-    <select id="producto" onchange="toggleOtro(this.value)">
-      <option value="">— Seleccionar producto —</option>
-      <optgroup label="Tazas y pocillos">
-        <option>Taza enlozada blanca</option>
-        <option>Taza enlozada color</option>
-        <option>Pocillo enlozado</option>
-      </optgroup>
-      <optgroup label="Platos y fuentes">
-        <option>Plato hondo enlozado</option>
-        <option>Plato playo enlozado</option>
-        <option>Fuente enlozada chica</option>
-        <option>Fuente enlozada grande</option>
-      </optgroup>
-      <optgroup label="Cacerolas">
-        <option>Cacerola enlozada chica</option>
-        <option>Cacerola enlozada mediana</option>
-        <option>Cacerola enlozada grande</option>
-        <option>Sopera enlozada</option>
-      </optgroup>
-      <optgroup label="Parrillas">
-        <option>Parrilla tambor chica</option>
-        <option>Parrilla tambor mediana</option>
-        <option>Parrilla tambor grande</option>
-      </optgroup>
-      <optgroup label="Otros">
-        <option>Jarro enlozado 1L</option>
-        <option>Jarro enlozado 2L</option>
-        <option>Asadera enlozada</option>
-        <option>Disco de arado enlozado</option>
-        <option>Balde enlozado</option>
-        <option value="otro">Otro (escribir)</option>
-      </optgroup>
-    </select>
-    <div class="errmsg" id="e-prod">Seleccioná el producto</div>
-  </div>
-  <div class="fld extra-hide" id="f-otro">
-    <label>Especificar producto</label>
-    <input type="text" id="otro-prod" placeholder="Nombre del producto">
-  </div>
-  <div class="fld">
-    <label>Cantidad <span class="req">*</span></label>
-    <input type="number" id="cantidad" placeholder="1" min="1" value="1">
-  </div>
-</div>
-```
-
+    <!-- Venta: selector de producto -->
+    <div class="extra-hide" id="f-venta">
+      <div class="fld">
+        <label>Producto <span class="req">*</span></label>
+        <select id="producto" onchange="toggleOtro(this.value)">
+          <option value="">— Seleccionar producto —</option>
+          <optgroup label="Tazas y pocillos">
+            <option>Taza enlozada blanca</option>
+            <option>Taza enlozada color</option>
+            <option>Pocillo enlozado</option>
+          </optgroup>
+          <optgroup label="Platos y fuentes">
+            <option>Plato hondo enlozado</option>
+            <option>Plato playo enlozado</option>
+            <option>Fuente enlozada chica</option>
+            <option>Fuente enlozada grande</option>
+          </optgroup>
+          <optgroup label="Cacerolas">
+            <option>Cacerola enlozada chica</option>
+            <option>Cacerola enlozada mediana</option>
+            <option>Cacerola enlozada grande</option>
+            <option>Sopera enlozada</option>
+          </optgroup>
+          <optgroup label="Parrillas">
+            <option>Parrilla tambor chica</option>
+            <option>Parrilla tambor mediana</option>
+            <option>Parrilla tambor grande</option>
+          </optgroup>
+          <optgroup label="Otros">
+            <option>Jarro enlozado 1L</option>
+            <option>Jarro enlozado 2L</option>
+            <option>Asadera enlozada</option>
+            <option>Disco de arado enlozado</option>
+            <option>Balde enlozado</option>
+            <option value="otro">Otro (escribir)</option>
+          </optgroup>
+        </select>
+        <div class="errmsg" id="e-prod">Seleccioná el producto</div>
+      </div>
+      <div class="fld extra-hide" id="f-otro">
+        <label>Especificar producto</label>
+        <input type="text" id="otro-prod" placeholder="Nombre del producto">
+      </div>
+      <div class="fld">
+        <label>Cantidad <span class="req">*</span></label>
+        <input type="number" id="cantidad" placeholder="1" min="1" value="1">
+      </div>
+    </div>
   </div>
 
   <div class="card">
@@ -295,7 +289,6 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </div>
 
 <!-- PASO 3 -->
-
 <div class="sec" id="step-3">
   <div class="sum-card">
     <h3>Resumen del movimiento</h3>
@@ -324,7 +317,6 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </div>
 
 <!-- SUCCESS -->
-
 <div class="success" id="success">
   <div class="success-icon">✅</div>
   <h2>¡Movimiento registrado!</h2>
@@ -464,9 +456,7 @@ async function enviar() {
     observaciones:document.getElementById('obs').value
   });
   try {
-    // Usar GET para máxima compatibilidad con iOS Safari
-    var url = SCRIPT_URL + '?' + params.toString();
-    var response = await fetch(url, { method:'GET', mode:'no-cors' });
+    await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:params});
     document.getElementById('step-'+step).classList.remove('active');
     document.getElementById('success').classList.add('show');
     window.scrollTo(0,0);
@@ -507,6 +497,5 @@ function resetForm() {
   window.scrollTo(0,0);
 }
 </script>
-
 </body>
 </html>
