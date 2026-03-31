@@ -150,7 +150,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </div>
 
 <script>
-var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwiN36gQ0LMzlmXMJzTor1MChO1HjIR9Sb_wiULEfaSbjpupLXq6V1tvjoLsZakwBdu/exec";
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx1X7Y8FIWe-XS-y9egR5Tvmv0aoE6rbJBQRwRP9s5vI71POXyBJZbqccaHIxuWowrv/exec";
 
 var categorias = [
   {
@@ -277,40 +277,13 @@ async function enviar() {
     productos_json: JSON.stringify(productos)
   });
 
-  // Usar iframe para evitar problemas CORS con Apps Script
   try {
-    var iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.name = 'hidden_iframe';
-    document.body.appendChild(iframe);
-
-    var form = document.createElement('form');
-    form.method = 'POST';
-    form.action = SCRIPT_URL;
-    form.target = 'hidden_iframe';
-    form.style.display = 'none';
-
-    params.forEach(function(value, key) {
-      var input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = key;
-      input.value = value;
-      form.appendChild(input);
-    });
-
-    document.body.appendChild(form);
-    form.submit();
-
-    // Esperar 2 segundos y mostrar éxito
-    setTimeout(function() {
-      document.querySelectorAll('.card, .info-banner, .resumen-card').forEach(function(el){ el.style.display='none'; });
-      document.querySelector('.navbtns').style.display='none';
-      document.querySelector('.total-bar').style.display='none';
-      document.getElementById('success').classList.add('show');
-      window.scrollTo(0,0);
-      document.body.removeChild(form);
-      document.body.removeChild(iframe);
-    }, 2000);
+    await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body:params });
+    document.querySelectorAll('.card, .info-banner, .resumen-card').forEach(function(el){ el.style.display='none'; });
+    document.querySelector('.navbtns').style.display='none';
+    document.querySelector('.total-bar').style.display='none';
+    document.getElementById('success').classList.add('show');
+    window.scrollTo(0,0);
   } catch(err) {
     btn.textContent = '✅ Registrar entrada de mercadería';
     btn.disabled = false;
