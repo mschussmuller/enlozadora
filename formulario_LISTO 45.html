@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -114,6 +115,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </div>
 
 <!-- PASO 1 -->
+
 <div class="sec active" id="step-1">
   <div class="card">
     <div class="card-hdr">
@@ -157,6 +159,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </div>
 
 <!-- PASO 2 -->
+
 <div class="sec" id="step-2">
   <div class="card">
     <div class="card-hdr">
@@ -182,61 +185,192 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
       <div class="errmsg" id="e-tipo">Seleccioná el tipo</div>
     </div>
 
-    <!-- Enlozado: descripcion libre -->
-    <div class="fld extra-hide" id="f-enlozado">
-      <label>¿Qué se va a enlozar? <span class="req">*</span></label>
-      <input type="text" id="desc-enlozado" placeholder="Ej: Parrilla tambor grande, negro">
-      <div class="errmsg" id="e-desc">Describí el artículo</div>
-    </div>
+```
+<!-- Enlozado: descripcion libre -->
+<div class="fld extra-hide" id="f-enlozado">
+  <label>¿Qué se va a enlozar? <span class="req">*</span></label>
+  <input type="text" id="desc-enlozado" placeholder="Ej: Parrilla tambor grande, negro">
+  <div class="errmsg" id="e-desc">Describí el artículo</div>
+</div>
 
-    <!-- Venta: selector de producto -->
-    <div class="extra-hide" id="f-venta">
-      <div class="fld">
-        <label>Producto <span class="req">*</span></label>
-        <select id="producto" onchange="toggleOtro(this.value)">
-          <option value="">— Seleccionar producto —</option>
-          <optgroup label="Tazas y pocillos">
-            <option>Taza enlozada blanca</option>
-            <option>Taza enlozada color</option>
-            <option>Pocillo enlozado</option>
-          </optgroup>
-          <optgroup label="Platos y fuentes">
-            <option>Plato hondo enlozado</option>
-            <option>Plato playo enlozado</option>
-            <option>Fuente enlozada chica</option>
-            <option>Fuente enlozada grande</option>
-          </optgroup>
-          <optgroup label="Cacerolas">
-            <option>Cacerola enlozada chica</option>
-            <option>Cacerola enlozada mediana</option>
-            <option>Cacerola enlozada grande</option>
-            <option>Sopera enlozada</option>
-          </optgroup>
-          <optgroup label="Parrillas">
-            <option>Parrilla tambor chica</option>
-            <option>Parrilla tambor mediana</option>
-            <option>Parrilla tambor grande</option>
-          </optgroup>
-          <optgroup label="Otros">
-            <option>Jarro enlozado 1L</option>
-            <option>Jarro enlozado 2L</option>
-            <option>Asadera enlozada</option>
-            <option>Disco de arado enlozado</option>
-            <option>Balde enlozado</option>
-            <option value="otro">Otro (escribir)</option>
-          </optgroup>
-        </select>
-        <div class="errmsg" id="e-prod">Seleccioná el producto</div>
-      </div>
-      <div class="fld extra-hide" id="f-otro">
-        <label>Especificar producto</label>
-        <input type="text" id="otro-prod" placeholder="Nombre del producto">
-      </div>
-      <div class="fld">
-        <label>Cantidad <span class="req">*</span></label>
-        <input type="number" id="cantidad" placeholder="1" min="1" value="1">
-      </div>
-    </div>
+<!-- Venta: selector de producto -->
+<div class="extra-hide" id="f-venta">
+  <div class="fld">
+    <label>Producto <span class="req">*</span></label>
+    <select id="producto" onchange="toggleOtro(this.value)">
+      <option value="">— Seleccionar producto —</option>
+      <optgroup label="🔥 Parrillas">
+        <option>Parrilla Tambor Chica - Mesada Madera</option>
+        <option>Parrilla Tambor Mediana - Mesada Madera</option>
+        <option>Parrilla Tambor Mediana - Mesada Chapa</option>
+        <option>Parrilla Tambor Grande Normal</option>
+        <option>Parrilla Tambor Grande Premium</option>
+        <option>Parrilla Medio Tambor</option>
+        <option>Parrilla Medio Tambor con Rueditas</option>
+        <option>Parrilla Circular 50cm sin Ruedas</option>
+        <option>Parrilla Circular 50cm con Ruedas</option>
+        <option>Parrilla de Piso Club Libertad</option>
+        <option>Parrilla de Piso Club Guaraní</option>
+        <option>Parrilla de Piso Club Olimpia</option>
+        <option>Parrilla de Piso Club Cerro</option>
+        <option>Parrilla de Piso Club Luque</option>
+        <option>Parrilla 40cm altura 83cm</option>
+        <option>Parrilla 40cm 3 Patas con Porta Costillar</option>
+        <option>Parrillita de Mesa Carbonera 20x26</option>
+        <option>Parrillita de Mesa Carbonera 39x29</option>
+        <option>Parrillita de Mesa Verde con Marrón</option>
+        <option>Fogonero Chico 30cm</option>
+        <option>Fogonero Mediano 54cm</option>
+        <option>Fogonero Grande 59cm</option>
+        <option>Fogonero Cuadrado con Accesorios</option>
+      </optgroup>
+      <optgroup label="🛠️ Kit Parrillero">
+        <option>Palita (modelo nuevo)</option>
+        <option>Atizador (modelo nuevo)</option>
+        <option>Pinza para Carbón</option>
+        <option>Combo Parrillero</option>
+        <option>Smasher 10cm</option>
+        <option>Smasher 11cm</option>
+        <option>Smasher 12cm</option>
+        <option>Espadín 72cm</option>
+        <option>Espumadera</option>
+        <option>Cucharón</option>
+      </optgroup>
+      <optgroup label="🍳 Bandejas y Asaderas">
+        <option>Asadera 23x33</option>
+        <option>Asadera 30x21</option>
+        <option>Asadera 41x31</option>
+        <option>Asadera 46x59</option>
+        <option>Asadera 59x46</option>
+        <option>Bandeja 22x22</option>
+        <option>Bandeja 25x25</option>
+        <option>Bandeja 27x27</option>
+        <option>Bandeja Rica 37x21</option>
+        <option>Bandeja 35x29</option>
+        <option>Bandeja 40x40</option>
+        <option>Bandeja 40x51</option>
+        <option>Bandeja 44x30</option>
+        <option>Bandeja 49x39</option>
+        <option>Bandeja 50x50</option>
+        <option>Bandeja 60x40</option>
+        <option>Bandeja 60x45</option>
+        <option>Bandeja Panadera 59x70</option>
+        <option>Bandeja Panadera 70x58</option>
+        <option>Budinera 25x13</option>
+        <option>Budinera 30x12</option>
+        <option>Budinera 35x10</option>
+        <option>Budinera 36x11</option>
+        <option>Budinera 23x13</option>
+        <option>Bandeja Pizzera 29cm</option>
+        <option>Bandeja Pizzera 31cm</option>
+        <option>Bandeja para Donas 35x26</option>
+        <option>Molde Cupcake</option>
+        <option>Chupinera Individual</option>
+        <option>Chupinera 21x27</option>
+        <option>Chupinera 35x26</option>
+        <option>Chupinera 36x26</option>
+        <option>Chupinera 60x40</option>
+        <option>Plancheta Mini 18x12</option>
+        <option>Plancheta 40x18</option>
+        <option>Plancheta 45x30</option>
+        <option>Plancheta 46x30</option>
+        <option>Plancheta 50x26</option>
+        <option>Provoletera</option>
+        <option>Wok 32cm</option>
+        <option>Wok 36cm</option>
+        <option>Colador 26cm</option>
+        <option>Ensaladera</option>
+        <option>Bowl con Tapa</option>
+        <option>Cazuelita 15cm</option>
+      </optgroup>
+      <optgroup label="⚫ Discos y Paelleras">
+        <option>Disco 35cm</option>
+        <option>Disco 51cm sin Tapa</option>
+        <option>Disco 51cm con Tapa</option>
+        <option>Disco 52cm</option>
+        <option>Disco 53cm</option>
+        <option>Disco 58x58 con Tapa</option>
+        <option>Disco 81cm (Arado)</option>
+        <option>Paellera Personal 16cm</option>
+        <option>Paellera 35cm con Tapa</option>
+        <option>Paellera 50cm</option>
+        <option>Soporte para Disco</option>
+        <option>Porta Costillar</option>
+      </optgroup>
+      <optgroup label="☕ Jarritos y Jarras">
+        <option>Jarrito N°8 sin Diseño</option>
+        <option>Jarrito N°8 con Diseño</option>
+        <option>Jarrito N°9 sin Diseño</option>
+        <option>Jarrito N°9 con Diseño</option>
+        <option>Jarrito N°10 sin Diseño</option>
+        <option>Jarrito N°10 con Diseño</option>
+        <option>Jarra 1 Litro sin Diseño</option>
+        <option>Jarra 1 Litro con Diseño</option>
+        <option>Lechera</option>
+        <option>Materito</option>
+        <option>Chopera sin Diseño</option>
+        <option>Chopera con Diseño</option>
+        <option>Compotera</option>
+        <option>Salserito Chico</option>
+        <option>Salserito Grande</option>
+      </optgroup>
+      <optgroup label="🍽️ Platos">
+        <option>Plato Hondo 23cm</option>
+        <option>Plato Hondo 25cm</option>
+        <option>Plato Hondo 28cm</option>
+        <option>Plato Playo 23cm</option>
+        <option>Plato Playo 25cm</option>
+        <option>Plato Playo 28cm</option>
+        <option>Plato para Asado grande</option>
+        <option>Platito 15cm</option>
+        <option>Plato Nidal con Salsero</option>
+        <option>Plato Olimpia 23cm</option>
+      </optgroup>
+      <optgroup label="🫖 Tazas">
+        <option>Taza Enlozada sin Diseño</option>
+        <option>Taza Enlozada con Diseño</option>
+      </optgroup>
+      <optgroup label="🪧 Carteles y Decoración">
+        <option>Cartel Parrilla 100% Paraguaya</option>
+        <option>Cartel Coca Cola</option>
+        <option>Cartel El Mejor Asado lo Hace mi Papá</option>
+        <option>Cartel Asado otros modelos</option>
+        <option>Cartel para Jardín grande</option>
+        <option>Cartelito para Jardín pequeño</option>
+        <option>Cartel WiFi</option>
+        <option>Cartel Sanitario</option>
+        <option>Cartel Harley Davidson</option>
+        <option>Cuadro Quincho 20x20</option>
+        <option>Cuadro Quincho 30x20</option>
+        <option>Cuadro Quincho 40x30</option>
+        <option>Crucifijo Oxidado</option>
+        <option>Porta Llaves diseño Búho</option>
+        <option>Porta Espiral</option>
+        <option>Porta Velas</option>
+        <option>Porta Servilletas</option>
+        <option>Porta Plato</option>
+        <option>Base de Madera para Parrilla</option>
+        <option>Tabla de Madera para Picar</option>
+        <option>Trípode</option>
+        <option>Delantal de Jeans</option>
+      </optgroup>
+      <optgroup label="➕ Otro">
+        <option value="otro">Otro (escribir)</option>
+      </optgroup>
+    </select>
+    <div class="errmsg" id="e-prod">Seleccioná el producto</div>
+  </div>
+  <div class="fld extra-hide" id="f-otro">
+    <label>Especificar producto</label>
+    <input type="text" id="otro-prod" placeholder="Nombre del producto">
+  </div>
+  <div class="fld">
+    <label>Cantidad <span class="req">*</span></label>
+    <input type="number" id="cantidad" placeholder="1" min="1" value="1">
+  </div>
+</div>
+```
+
   </div>
 
   <div class="card">
@@ -289,6 +423,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </div>
 
 <!-- PASO 3 -->
+
 <div class="sec" id="step-3">
   <div class="sum-card">
     <h3>Resumen del movimiento</h3>
@@ -317,6 +452,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </div>
 
 <!-- SUCCESS -->
+
 <div class="success" id="success">
   <div class="success-icon">✅</div>
   <h2>¡Movimiento registrado!</h2>
@@ -326,7 +462,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 
 <script>
 // ══ PEGÁ TU URL ACÁ ══════════════════════════════════════════
-var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwiN36gQ0LMzlmXMJzTor1MChO1HjIR9Sb_wiULEfaSbjpupLXq6V1tvjoLsZakwBdu/exec";
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx1X7Y8FIWe-XS-y9egR5Tvmv0aoE6rbJBQRwRP9s5vI71POXyBJZbqccaHIxuWowrv/exec";
 // ═════════════════════════════════════════════════════════════
 
 var step = 1;
@@ -456,11 +592,7 @@ async function enviar() {
     observaciones:document.getElementById('obs').value
   });
   try {
-    var response = await fetch(SCRIPT_URL, {
-      method:'POST',
-      mode:'no-cors',
-      body: params
-    });
+    await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:params});
     document.getElementById('step-'+step).classList.remove('active');
     document.getElementById('success').classList.add('show');
     window.scrollTo(0,0);
@@ -501,5 +633,6 @@ function resetForm() {
   window.scrollTo(0,0);
 }
 </script>
+
 </body>
 </html>
