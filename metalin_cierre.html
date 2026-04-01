@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Cierre del Día — METAL-IN</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Arial,sans-serif;background:#f1f5f9;color:#1e293b;min-height:100vh;padding-bottom:80px;max-width:480px;margin:0 auto}
+.hdr{background:linear-gradient(135deg,#1a2d4a 0%,#1D6B3A 100%);padding:16px 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.hdr-top{display:flex;align-items:center;gap:10px}
+.hdr-icon{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.hdr-title{color:#fff;font-size:16px;font-weight:700}
+.hdr-sub{color:rgba(255,255,255,.7);font-size:12px;margin-top:2px}
+.card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;overflow:hidden;margin:12px 14px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.card-hdr{padding:11px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f1f5f9}
+.card-hdr-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.card-hdr h2{font-size:13px;font-weight:700;color:#1a2d4a}
+.fld{padding:11px 16px;border-bottom:1px solid #f8fafc}
+.fld:last-child{border:none}
+.fld label{display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.fld label .req{color:#dc2626;margin-left:2px}
+input[type=text],input[type=date],input[type=number],select,textarea{width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-family:Arial,sans-serif;font-size:15px;color:#1e293b;background:#f8fafc;outline:none;-webkit-appearance:none;appearance:none}
+input:focus,select:focus,textarea:focus{border-color:#1D6B3A;background:#fff;box-shadow:0 0 0 3px rgba(29,107,58,.1)}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
+.empresa-btns{display:flex;gap:8px;padding:11px 16px}
+.emp-btn{flex:1;padding:14px;border-radius:10px;border:2px solid #e2e8f0;background:#f8fafc;font-family:Arial,sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-align:center;transition:all .2s;line-height:1.3}
+.emp-btn.active-laser{border-color:#2E75B6;background:#dbeafe;color:#1a2d4a}
+.emp-btn.active-corte{border-color:#117A65;background:#d1fae5;color:#065F46}
+.saldo-box{background:#D4EDDA;border-radius:10px;padding:12px 16px;margin:8px 16px;display:flex;justify-content:space-between;align-items:center}
+.saldo-box span{font-size:13px;color:#1D6B3A;font-weight:600}
+.saldo-box strong{font-size:20px;color:#1D6B3A;font-weight:700}
+.navbtns{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;padding:12px 14px;background:rgba(241,245,249,.97);backdrop-filter:blur(8px);border-top:1px solid #e2e8f0;z-index:50}
+.btn-send{width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:700;font-family:Arial,sans-serif;border:none;cursor:pointer;background:#1D6B3A;color:#fff;box-shadow:0 4px 14px rgba(29,107,58,.35)}
+.btn-send:disabled{background:#94a3b8;box-shadow:none;cursor:not-allowed}
+.errmsg{font-size:11px;color:#dc2626;margin-top:4px;display:none}
+.errmsg.show{display:block}
+.success{display:none;text-align:center;padding:60px 20px}
+.success.show{display:block}
+.success-icon{width:80px;height:80px;border-radius:50%;background:#d1fae5;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;font-size:42px;animation:pop .5s cubic-bezier(.175,.885,.32,1.275)}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.success h2{font-size:20px;color:#1D6B3A;margin-bottom:8px}
+.success p{font-size:14px;color:#64748b;line-height:1.6}
+.btn-nuevo{margin-top:22px;background:#1a2d4a;color:#fff;border:none;padding:14px 24px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:Arial,sans-serif;width:100%}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="hdr-icon">📊</div>
+    <div>
+      <div class="hdr-title">Cierre del Día — METAL-IN</div>
+      <div class="hdr-sub">Completar al final de cada día</div>
+    </div>
+  </div>
+</div>
+
+<!-- Empresa -->
+<div class="card">
+  <div class="card-hdr">
+    <div class="card-hdr-icon" style="background:#d1fae5">🏭</div>
+    <h2>¿Qué empresa estás cerrando?</h2>
+  </div>
+  <div class="empresa-btns">
+    <button class="emp-btn" id="btn-laser" onclick="setEmpresa('LASER')">⚡ LÁSER</button>
+    <button class="emp-btn" id="btn-corte" onclick="setEmpresa('CORTE Y DOBLADO')">⚙️ CORTE Y DOBLADO</button>
+  </div>
+  <div class="errmsg show" id="e-emp" style="padding:0 16px 11px">Seleccioná la empresa</div>
+</div>
+
+<!-- Datos básicos -->
+<div class="card">
+  <div class="card-hdr">
+    <div class="card-hdr-icon" style="background:#d1fae5">📋</div>
+    <h2>Datos del cierre</h2>
+  </div>
+  <div class="fld">
+    <label>Fecha <span class="req">*</span></label>
+    <input type="date" id="fecha">
+  </div>
+  <div class="fld">
+    <label>Encargado <span class="req">*</span></label>
+    <input type="text" id="encargado" placeholder="Tu nombre">
+    <div class="errmsg" id="e-enc">Ingresá tu nombre</div>
+  </div>
+</div>
+
+<!-- Caja -->
+<div class="card">
+  <div class="card-hdr">
+    <div class="card-hdr-icon" style="background:#d1fae5">💰</div>
+    <h2>Movimientos del día</h2>
+  </div>
+  <div class="fld">
+    <label>Saldo anterior (Gs)</label>
+    <input type="number" id="saldo-ant" placeholder="0" min="0" value="0" oninput="calcSaldo()">
+  </div>
+  <div class="fld">
+    <label>Cobros al contado (Gs)</label>
+    <input type="number" id="cobros-contado" placeholder="0" min="0" value="0" oninput="calcSaldo()">
+  </div>
+  <div class="fld">
+    <label>Créditos cobrados (Gs)</label>
+    <input type="number" id="creditos-cobrados" placeholder="0" min="0" value="0" oninput="calcSaldo()">
+  </div>
+  <div class="fld">
+    <label>Transferencias recibidas (Gs)</label>
+    <input type="number" id="transferencias" placeholder="0" min="0" value="0" oninput="calcSaldo()">
+  </div>
+  <div class="fld">
+    <label>Gastos del día (Gs)</label>
+    <input type="number" id="gastos" placeholder="0" min="0" value="0" oninput="calcSaldo()">
+  </div>
+  <div class="fld">
+    <label>Retiro del día (Gs)</label>
+    <input type="number" id="retiro" placeholder="0" min="0" value="0" oninput="calcSaldo()">
+  </div>
+  <div class="fld">
+    <label>Observaciones</label>
+    <textarea id="obs" rows="2" placeholder="Cualquier detalle del día..." style="resize:none"></textarea>
+  </div>
+</div>
+
+<div class="saldo-box">
+  <span>💰 Saldo final del día:</span>
+  <strong id="saldo-final">Gs. 0</strong>
+</div>
+
+<div class="navbtns">
+  <button class="btn-send" id="btn-send" onclick="enviar()">📊 Registrar cierre</button>
+</div>
+
+<div class="success" id="success">
+  <div class="success-icon">✅</div>
+  <h2>¡Cierre registrado!</h2>
+  <p>El cierre del día fue enviado correctamente.</p>
+  <button class="btn-nuevo" onclick="resetForm()">📊 Registrar otro cierre</button>
+</div>
+
+<script>
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6L4spCxrYOk_luNvBw1AiqL-uw4mWGWM--kJg8Y1PXTTbsDVrAJoTsdnXldseOYHG/exec";
+var empresa = "";
+
+function setEmpresa(e) {
+  empresa = e;
+  document.getElementById('btn-laser').className = 'emp-btn' + (e==='LASER'?' active-laser':'');
+  document.getElementById('btn-corte').className = 'emp-btn' + (e==='CORTE Y DOBLADO'?' active-corte':'');
+  document.getElementById('e-emp').style.display='none';
+}
+
+function getVal(id) { return parseFloat(document.getElementById(id).value)||0; }
+
+function calcSaldo() {
+  var saldo = getVal('saldo-ant') + getVal('cobros-contado') + getVal('creditos-cobrados') + getVal('transferencias') - getVal('gastos') - getVal('retiro');
+  document.getElementById('saldo-final').textContent = 'Gs. ' + saldo.toLocaleString('es-PY');
+}
+
+async function enviar() {
+  var ok = true;
+  if (!empresa) { document.getElementById('e-emp').style.display='block'; ok=false; }
+  if (!document.getElementById('encargado').value) { document.getElementById('e-enc').classList.add('show'); ok=false; } else document.getElementById('e-enc').classList.remove('show');
+  if (!ok) { window.scrollTo(0,0); return; }
+
+  var btn = document.getElementById('btn-send');
+  btn.textContent='⏳ Enviando...'; btn.disabled=true;
+
+  var saldoFinal = getVal('saldo-ant') + getVal('cobros-contado') + getVal('creditos-cobrados') + getVal('transferencias') - getVal('gastos') - getVal('retiro');
+
+  var params = new URLSearchParams({
+    tipo_formulario: "cierre_metalin",
+    empresa: empresa,
+    fecha: document.getElementById('fecha').value,
+    encargado: document.getElementById('encargado').value,
+    saldo_anterior: getVal('saldo-ant'),
+    cobros_contado: getVal('cobros-contado'),
+    creditos_cobrados: getVal('creditos-cobrados'),
+    transferencias: getVal('transferencias'),
+    gastos: getVal('gastos'),
+    retiro: getVal('retiro'),
+    saldo_final: saldoFinal,
+    observaciones: document.getElementById('obs').value
+  });
+
+  try {
+    await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body:params });
+    document.querySelectorAll('.card, .saldo-box').forEach(function(el){ el.style.display='none'; });
+    document.querySelector('.navbtns').style.display='none';
+    document.getElementById('success').classList.add('show');
+    window.scrollTo(0,0);
+  } catch(err) {
+    btn.textContent='📊 Registrar cierre'; btn.disabled=false;
+    alert('Error al enviar. Revisá tu conexión.');
+  }
+}
+
+function resetForm() {
+  document.getElementById('success').classList.remove('show');
+  document.querySelectorAll('.card, .saldo-box').forEach(function(el){ el.style.display=''; });
+  document.querySelector('.navbtns').style.display='';
+  empresa='';
+  document.getElementById('btn-laser').className='emp-btn';
+  document.getElementById('btn-corte').className='emp-btn';
+  document.getElementById('fecha').valueAsDate=new Date();
+  ['encargado','obs'].forEach(function(id){ document.getElementById(id).value=''; });
+  ['saldo-ant','cobros-contado','creditos-cobrados','transferencias','gastos','retiro'].forEach(function(id){ document.getElementById(id).value='0'; });
+  document.getElementById('saldo-final').textContent='Gs. 0';
+  var btn=document.getElementById('btn-send'); btn.textContent='📊 Registrar cierre'; btn.disabled=false;
+  window.scrollTo(0,0);
+}
+
+document.getElementById('fecha').valueAsDate=new Date();
+</script>
+</body>
+</html>
