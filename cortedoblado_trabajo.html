@@ -1,263 +1,454 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Nuevo Trabajo — CORTE Y DOBLADO</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:Arial,sans-serif;background:#f1f5f9;color:#1e293b;min-height:100vh;padding-bottom:80px;max-width:480px;margin:0 auto}
-.hdr{background:linear-gradient(135deg,#1a2d4a 0%,#117A65 100%);padding:16px 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3)}
-.hdr-top{display:flex;align-items:center;gap:10px}
-.hdr-icon{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.hdr-title{color:#fff;font-size:16px;font-weight:700}
-.hdr-sub{color:rgba(255,255,255,.7);font-size:12px;margin-top:2px}
-.card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;overflow:hidden;margin:12px 14px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.card-hdr{padding:11px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f1f5f9}
-.card-hdr-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.card-hdr h2{font-size:13px;font-weight:700;color:#1a2d4a}
-.fld{padding:11px 16px;border-bottom:1px solid #f8fafc}
-.fld:last-child{border:none}
-.fld label{display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
-.fld label .req{color:#dc2626;margin-left:2px}
-input[type=text],input[type=date],input[type=number],select,textarea{width:100%;padding:11px 13px;border:1.5px solid #e2e8f0;border-radius:10px;font-family:Arial,sans-serif;font-size:15px;color:#1e293b;background:#f8fafc;outline:none;-webkit-appearance:none;appearance:none}
-input:focus,select:focus,textarea:focus{border-color:#117A65;background:#fff;box-shadow:0 0 0 3px rgba(17,122,101,.1)}
-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
-.medidas-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:11px 16px}
-.medida-item label{display:block;font-size:10px;font-weight:700;color:#64748b;margin-bottom:4px;text-transform:uppercase}
-.condicion-btns{display:flex;gap:8px;padding:11px 16px}
-.cond-btn{flex:1;padding:12px;border-radius:10px;border:2px solid #e2e8f0;background:#f8fafc;font-family:Arial,sans-serif;font-size:14px;font-weight:700;cursor:pointer;text-align:center;transition:all .2s}
-.cond-btn.active-contado{border-color:#16a34a;background:#dcfce7;color:#16a34a}
-.cond-btn.active-credito{border-color:#dc2626;background:#fee2e2;color:#dc2626}
-.credito-extra{display:none;padding:0 16px 16px}
-.credito-extra.show{display:block}
-.saldo-box{background:#FEF2F2;border-radius:10px;padding:12px 16px;margin:8px 0;display:flex;justify-content:space-between;align-items:center}
-.saldo-box span{font-size:13px;color:#dc2626;font-weight:600}
-.saldo-box strong{font-size:18px;color:#dc2626;font-weight:700}
-.navbtns{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;padding:12px 14px;background:rgba(241,245,249,.97);backdrop-filter:blur(8px);border-top:1px solid #e2e8f0;z-index:50}
-.btn-send{width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:700;font-family:Arial,sans-serif;border:none;cursor:pointer;background:#117A65;color:#fff;box-shadow:0 4px 14px rgba(17,122,101,.35)}
-.btn-send:disabled{background:#94a3b8;box-shadow:none;cursor:not-allowed}
-.errmsg{font-size:11px;color:#dc2626;margin-top:4px;display:none}
-.errmsg.show{display:block}
-.success{display:none;text-align:center;padding:60px 20px}
-.success.show{display:block}
-.success-icon{width:80px;height:80px;border-radius:50%;background:#d1fae5;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;font-size:42px;animation:pop .5s cubic-bezier(.175,.885,.32,1.275)}
-@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
-.success h2{font-size:20px;color:#117A65;margin-bottom:8px}
-.success p{font-size:14px;color:#64748b;line-height:1.6}
-.btn-nuevo{margin-top:22px;background:#1a2d4a;color:#fff;border:none;padding:14px 24px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:Arial,sans-serif;width:100%}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nuevo Trabajo — CORTE Y DOBLADO</title>
+  <!-- Cache-busting: fuerza recarga en cada visita -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --verde:    #117A65;
+      --verde-cl: #D5F5E3;
+      --verde-dk: #0E6655;
+      --gris:     #F4F6F7;
+      --borde:    #D5D8DC;
+      --texto:    #1C2833;
+      --sub:      #717D7E;
+      --danger:   #C0392B;
+      --radius:   12px;
+      --sombra:   0 2px 16px rgba(0,0,0,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #E9F7EF;
+      min-height: 100vh;
+      padding: 24px 16px 48px;
+      color: var(--texto);
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dk) 100%);
+      border-radius: var(--radius);
+      padding: 28px 24px 22px;
+      margin-bottom: 24px;
+      color: #fff;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(17,122,101,0.3);
+    }
+    .header .emoji { font-size: 2.4rem; margin-bottom: 8px; display: block; }
+    .header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header p  { font-size: 0.9rem; opacity: 0.85; margin-top: 4px; }
+
+    .card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: var(--sombra);
+      border-left: 4px solid var(--verde);
+    }
+    .card-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--verde);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .campo { margin-bottom: 16px; }
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--sub);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    label .req { color: var(--danger); margin-left: 2px; }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--borde);
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--texto);
+      background: #FDFEFE;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--verde);
+      box-shadow: 0 0 0 3px rgba(17,122,101,0.12);
+      background: #fff;
+    }
+    textarea { resize: vertical; min-height: 80px; }
+
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    @media (max-width: 500px) {
+      .grid2 { grid-template-columns: 1fr; }
+      .grid3 { grid-template-columns: 1fr 1fr; }
+    }
+
+    .radio-group { display: flex; gap: 12px; flex-wrap: wrap; }
+    .radio-btn {
+      flex: 1; min-width: 120px;
+      border: 2px solid var(--borde);
+      border-radius: 10px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      background: #fff;
+    }
+    .radio-btn input { display: none; }
+    .radio-btn:has(input:checked) {
+      border-color: var(--verde);
+      background: var(--verde-cl);
+      color: var(--verde-dk);
+    }
+
+    .saldo-box {
+      background: var(--verde-cl);
+      border: 2px solid var(--verde);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .saldo-box span { font-size: 0.85rem; font-weight: 600; color: var(--verde-dk); }
+    .saldo-box strong { font-size: 1.2rem; font-weight: 700; color: var(--verde-dk); }
+
+    .btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dk) 100%);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      transition: opacity 0.2s, transform 0.15s;
+      box-shadow: 0 4px 14px rgba(17,122,101,0.3);
+    }
+    .btn:active { transform: scale(0.98); opacity: 0.9; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .exito {
+      display: none;
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 40px 24px;
+      text-align: center;
+      box-shadow: var(--sombra);
+      border-top: 5px solid var(--verde);
+    }
+    .exito .big-icon { font-size: 3.5rem; margin-bottom: 12px; }
+    .exito h2 { font-size: 1.3rem; font-weight: 700; color: var(--verde-dk); margin-bottom: 8px; }
+    .exito p  { font-size: 0.9rem; color: var(--sub); margin-bottom: 24px; }
+    .btn-otro {
+      display: inline-block;
+      padding: 12px 28px;
+      background: var(--verde-cl);
+      color: var(--verde-dk);
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 2px solid var(--verde);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 18px; height: 18px;
+      border: 3px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    #bloque-entrega { display: none; }
+
+    /* etiqueta medidas */
+    .medidas-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--sub);
+      margin-bottom: 8px;
+      display: block;
+    }
+  </style>
 </head>
 <body>
 
-<div class="hdr">
-  <div class="hdr-top">
-    <div class="hdr-icon">⚙️</div>
-    <div>
-      <div class="hdr-title">Nuevo Trabajo — CORTE Y DOBLADO</div>
-      <div class="hdr-sub">Registrar pedido de cliente</div>
+<div id="formulario">
+  <div class="header">
+    <span class="emoji">⚙️</span>
+    <h1>Nuevo Trabajo — CORTE Y DOBLADO</h1>
+    <p>Registrar pedido de cliente</p>
+  </div>
+
+  <!-- DATOS GENERALES -->
+  <div class="card">
+    <div class="card-title">📋 Datos del trabajo</div>
+
+    <div class="grid2">
+      <div class="campo">
+        <label>Fecha <span class="req">*</span></label>
+        <input type="date" id="fecha" required />
+      </div>
+      <div class="campo">
+        <label>Encargado <span class="req">*</span></label>
+        <input type="text" id="encargado" placeholder="Tu nombre" required />
+      </div>
+    </div>
+
+    <div class="campo">
+      <label>Cliente <span class="req">*</span></label>
+      <input type="text" id="cliente" placeholder="Nombre del cliente" required />
     </div>
   </div>
+
+  <!-- DESCRIPCIÓN Y MEDIDAS -->
+  <div class="card">
+    <div class="card-title">⚙️ Descripción y medidas del trabajo</div>
+
+    <div class="campo">
+      <label>Descripción del trabajo <span class="req">*</span></label>
+      <textarea id="descripcion" placeholder="Describí el trabajo (ej: Caja metálica, tapa, soporte...)" required></textarea>
+    </div>
+
+    <div class="grid2">
+      <div class="campo">
+        <label>Material y espesor</label>
+        <input type="text" id="material" placeholder="Ej: Chapa galvanizada 1.2mm" />
+      </div>
+      <div class="campo">
+        <label>Cantidad de piezas</label>
+        <input type="number" id="cantidad" placeholder="Ej: 5" min="1" />
+      </div>
+    </div>
+
+    <div class="campo">
+      <span class="medidas-label">Medidas (cm)</span>
+      <div class="grid3">
+        <div>
+          <label>Largo</label>
+          <input type="number" id="largo" placeholder="0" min="0" step="0.1" />
+        </div>
+        <div>
+          <label>Ancho</label>
+          <input type="number" id="ancho" placeholder="0" min="0" step="0.1" />
+        </div>
+        <div>
+          <label>Alto</label>
+          <input type="number" id="alto" placeholder="0" min="0" step="0.1" />
+        </div>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label>Dobleces / Pliegues</label>
+      <input type="number" id="dobleces" placeholder="Ej: 4" min="0" />
+    </div>
+  </div>
+
+  <!-- PRECIO Y PAGO -->
+  <div class="card">
+    <div class="card-title">💰 Precio y forma de pago</div>
+
+    <div class="campo">
+      <label>Precio total presupuestado (Gs) <span class="req">*</span></label>
+      <input type="number" id="precio" placeholder="0" min="0" required />
+    </div>
+
+    <div class="campo">
+      <label>Condición de pago <span class="req">*</span></label>
+      <div class="radio-group">
+        <label class="radio-btn">
+          <input type="radio" name="condicion" value="Contado" checked onchange="toggleEntrega()" />
+          💵 Contado
+        </label>
+        <label class="radio-btn">
+          <input type="radio" name="condicion" value="Credito" onchange="toggleEntrega()" />
+          💳 Crédito
+        </label>
+      </div>
+    </div>
+
+    <div id="bloque-entrega">
+      <div class="campo">
+        <label>Entrega inicial (Gs)</label>
+        <input type="number" id="entrega" placeholder="0" min="0" value="0" oninput="calcSaldo()" />
+      </div>
+      <div class="saldo-box">
+        <span>Saldo pendiente:</span>
+        <strong id="saldo-texto">Gs. 0</strong>
+      </div>
+    </div>
+
+    <div class="campo" style="margin-top:16px;">
+      <label>Fecha estimada de entrega</label>
+      <input type="date" id="fecha-entrega" />
+    </div>
+
+    <div class="campo">
+      <label>Observaciones</label>
+      <textarea id="observaciones" placeholder="Notas adicionales (opcional)"></textarea>
+    </div>
+  </div>
+
+  <button class="btn" id="btn-enviar" onclick="enviar()">⚙️ Registrar trabajo</button>
 </div>
 
-<div class="card">
-  <div class="card-hdr">
-    <div class="card-hdr-icon" style="background:#d1fae5">📋</div>
-    <h2>Datos del trabajo</h2>
-  </div>
-  <div class="fld">
-    <label>Fecha <span class="req">*</span></label>
-    <input type="date" id="fecha">
-  </div>
-  <div class="fld">
-    <label>Encargado <span class="req">*</span></label>
-    <input type="text" id="encargado" placeholder="Tu nombre">
-    <div class="errmsg" id="e-enc">Ingresá tu nombre</div>
-  </div>
-  <div class="fld">
-    <label>Cliente <span class="req">*</span></label>
-    <input type="text" id="cliente" placeholder="Nombre y teléfono del cliente">
-    <div class="errmsg" id="e-cli">Ingresá el nombre del cliente</div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-hdr">
-    <div class="card-hdr-icon" style="background:#d1fae5">⚙️</div>
-    <h2>Descripción y medidas del trabajo</h2>
-  </div>
-  <div class="fld">
-    <label>Descripción del trabajo <span class="req">*</span></label>
-    <textarea id="descripcion" rows="3" placeholder="Ej: Caja metálica con tapa, perfil L, soporte para estante..." style="resize:none"></textarea>
-    <div class="errmsg" id="e-desc">Describí el trabajo</div>
-  </div>
-  <div class="fld">
-    <label>Material y espesor</label>
-    <input type="text" id="material" placeholder="Ej: Chapa N°16, Chapa N°18 galvanizada">
-  </div>
-  <div class="fld" style="padding-bottom:4px">
-    <label>Medidas (cm)</label>
-  </div>
-  <div class="medidas-grid">
-    <div class="medida-item">
-      <label>Largo</label>
-      <input type="number" id="largo" placeholder="0" min="0" step="0.1">
-    </div>
-    <div class="medida-item">
-      <label>Ancho</label>
-      <input type="number" id="ancho" placeholder="0" min="0" step="0.1">
-    </div>
-    <div class="medida-item">
-      <label>Alto</label>
-      <input type="number" id="alto" placeholder="0" min="0" step="0.1">
-    </div>
-  </div>
-  <div class="fld">
-    <label>Cantidad de piezas</label>
-    <input type="number" id="cantidad" placeholder="1" min="1" value="1">
-  </div>
-  <div class="fld">
-    <label>Dobleces / Pliegues</label>
-    <input type="text" id="dobleces" placeholder="Ej: 4 dobleces a 90°, 2 pliegues a 45°">
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-hdr">
-    <div class="card-hdr-icon" style="background:#d1fae5">💰</div>
-    <h2>Precio y forma de pago</h2>
-  </div>
-  <div class="fld">
-    <label>Precio total presupuestado (Gs) <span class="req">*</span></label>
-    <input type="number" id="precio" placeholder="0" min="0">
-    <div class="errmsg" id="e-precio">Ingresá el precio</div>
-  </div>
-  <div class="fld" style="padding-bottom:0">
-    <label>Condición de pago <span class="req">*</span></label>
-  </div>
-  <div class="condicion-btns">
-    <button class="cond-btn" id="btn-contado" onclick="setCond('Contado')">💵 Contado</button>
-    <button class="cond-btn" id="btn-credito" onclick="setCond('Credito')">💳 Crédito</button>
-  </div>
-  <div class="credito-extra" id="credito-extra">
-    <div class="fld" style="padding:0 0 11px">
-      <label>Entrega inicial (Gs)</label>
-      <input type="number" id="entrega" placeholder="0" min="0" oninput="calcSaldo()">
-    </div>
-    <div class="saldo-box">
-      <span>Saldo pendiente:</span>
-      <strong id="saldo-display">Gs. 0</strong>
-    </div>
-  </div>
-  <div class="fld">
-    <label>Fecha estimada de entrega</label>
-    <input type="date" id="fecha-entrega">
-  </div>
-  <div class="fld">
-    <label>Observaciones</label>
-    <textarea id="obs" rows="2" placeholder="Cualquier detalle adicional..." style="resize:none"></textarea>
-  </div>
-</div>
-
-<div class="navbtns">
-  <button class="btn-send" id="btn-send" onclick="enviar()">⚙️ Registrar trabajo</button>
-</div>
-
-<div class="success" id="success">
-  <div class="success-icon">⚙️</div>
+<!-- PANTALLA ÉXITO -->
+<div class="exito" id="pantalla-exito">
+  <div class="big-icon">⚙️</div>
   <h2>¡Trabajo registrado!</h2>
   <p>El pedido fue enviado correctamente a administración.</p>
-  <button class="btn-nuevo" onclick="resetForm()">⚙️ Registrar otro trabajo</button>
+  <button class="btn-otro" onclick="reiniciar()">⚙️ Registrar otro trabajo</button>
 </div>
 
 <script>
-var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6L4spCxrYOk_luNvBw1AiqL-uw4mWGWM--kJg8Y1PXTTbsDVrAJoTsdnXldseOYHG/exec";
-var condicion = "";
+  var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6L4spCxrYOk_luNvBw1AiqL-uw4mWGWM--kJg8Y1PXTTbsDVrAJoTsdnXldseOYHG/exec";
 
-function setCond(c) {
-  condicion = c;
-  document.getElementById('btn-contado').className = 'cond-btn' + (c==='Contado'?' active-contado':'');
-  document.getElementById('btn-credito').className = 'cond-btn' + (c==='Credito'?' active-credito':'');
-  document.getElementById('credito-extra').className = 'credito-extra' + (c==='Credito'?' show':'');
-  calcSaldo();
-}
+  document.getElementById("fecha").valueAsDate = new Date();
 
-function calcSaldo() {
-  var precio = parseFloat(document.getElementById('precio').value)||0;
-  var entrega = parseFloat(document.getElementById('entrega').value)||0;
-  var saldo = Math.max(0, precio - entrega);
-  document.getElementById('saldo-display').textContent = 'Gs. ' + saldo.toLocaleString('es-PY');
-}
-
-async function enviar() {
-  var ok = true;
-  if (!document.getElementById('encargado').value) { document.getElementById('e-enc').classList.add('show'); ok=false; } else document.getElementById('e-enc').classList.remove('show');
-  if (!document.getElementById('cliente').value) { document.getElementById('e-cli').classList.add('show'); ok=false; } else document.getElementById('e-cli').classList.remove('show');
-  if (!document.getElementById('descripcion').value) { document.getElementById('e-desc').classList.add('show'); ok=false; } else document.getElementById('e-desc').classList.remove('show');
-  if (!document.getElementById('precio').value) { document.getElementById('e-precio').classList.add('show'); ok=false; } else document.getElementById('e-precio').classList.remove('show');
-  if (!condicion) { alert('Seleccioná la condición de pago'); ok=false; }
-  if (!ok) return;
-
-  var btn = document.getElementById('btn-send');
-  btn.textContent='⏳ Enviando...'; btn.disabled=true;
-
-  var precio = parseFloat(document.getElementById('precio').value)||0;
-  var entrega = parseFloat(document.getElementById('entrega').value)||0;
-  var saldo = condicion==='Credito' ? Math.max(0,precio-entrega) : 0;
-  var medidas = [document.getElementById('largo').value, document.getElementById('ancho').value, document.getElementById('alto').value].filter(Boolean).join(' x ') + ' cm';
-
-  var descripcionCompleta = document.getElementById('descripcion').value;
-  if (medidas !== ' cm') descripcionCompleta += ' | Medidas: ' + medidas;
-  if (document.getElementById('dobleces').value) descripcionCompleta += ' | Dobleces: ' + document.getElementById('dobleces').value;
-
-  var params = new URLSearchParams({
-    tipo_formulario: "nuevo_trabajo",
-    empresa: "CORTE Y DOBLADO",
-    fecha: document.getElementById('fecha').value,
-    encargado: document.getElementById('encargado').value,
-    cliente: document.getElementById('cliente').value,
-    descripcion: descripcionCompleta,
-    material: document.getElementById('material').value,
-    cantidad: document.getElementById('cantidad').value,
-    precio: precio,
-    condicion: condicion,
-    entrega: entrega,
-    saldo: saldo,
-    fecha_entrega: document.getElementById('fecha-entrega').value,
-    observaciones: document.getElementById('obs').value
-  });
-
-  try {
-    await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body:params });
-    document.querySelectorAll('.card').forEach(function(el){ el.style.display='none'; });
-    document.querySelector('.navbtns').style.display='none';
-    document.getElementById('success').classList.add('show');
-    window.scrollTo(0,0);
-  } catch(err) {
-    btn.textContent='⚙️ Registrar trabajo'; btn.disabled=false;
-    alert('Error al enviar. Revisá tu conexión.');
+  function toggleEntrega() {
+    var cond = document.querySelector('input[name="condicion"]:checked').value;
+    document.getElementById("bloque-entrega").style.display =
+      cond === "Credito" ? "block" : "none";
+    if (cond !== "Credito") {
+      document.getElementById("entrega").value = "0";
+      calcSaldo();
+    }
   }
-}
 
-function resetForm() {
-  document.getElementById('success').classList.remove('show');
-  document.querySelectorAll('.card').forEach(function(el){ el.style.display=''; });
-  document.querySelector('.navbtns').style.display='';
-  document.getElementById('fecha').valueAsDate=new Date();
-  ['encargado','cliente','descripcion','material','dobleces','obs','fecha-entrega','largo','ancho','alto'].forEach(function(id){ document.getElementById(id).value=''; });
-  document.getElementById('cantidad').value='1';
-  document.getElementById('precio').value='';
-  document.getElementById('entrega').value='';
-  document.getElementById('saldo-display').textContent='Gs. 0';
-  condicion='';
-  document.getElementById('btn-contado').className='cond-btn';
-  document.getElementById('btn-credito').className='cond-btn';
-  document.getElementById('credito-extra').className='credito-extra';
-  var btn=document.getElementById('btn-send'); btn.textContent='⚙️ Registrar trabajo'; btn.disabled=false;
-  window.scrollTo(0,0);
-}
+  function calcSaldo() {
+    var precio  = parseFloat(document.getElementById("precio").value)  || 0;
+    var entrega = parseFloat(document.getElementById("entrega").value) || 0;
+    var saldo   = Math.max(0, precio - entrega);
+    document.getElementById("saldo-texto").textContent =
+      "Gs. " + saldo.toLocaleString("es-PY");
+  }
+  document.getElementById("precio").addEventListener("input", calcSaldo);
 
-document.getElementById('fecha').valueAsDate=new Date();
+  function enviar() {
+    var fecha       = document.getElementById("fecha").value;
+    var encargado   = document.getElementById("encargado").value.trim();
+    var cliente     = document.getElementById("cliente").value.trim();
+    var descripcion = document.getElementById("descripcion").value.trim();
+    var precio      = document.getElementById("precio").value;
+    var condicion   = document.querySelector('input[name="condicion"]:checked').value;
+    var entrega     = document.getElementById("entrega").value || "0";
+    var material    = document.getElementById("material").value.trim();
+    var cantidad    = document.getElementById("cantidad").value;
+    var largo       = document.getElementById("largo").value;
+    var ancho       = document.getElementById("ancho").value;
+    var alto        = document.getElementById("alto").value;
+    var dobleces    = document.getElementById("dobleces").value;
+    var observaciones = document.getElementById("observaciones").value.trim();
+
+    // Armar descripción completa con todos los detalles
+    var descFinal = descripcion;
+    if (material)  descFinal += " | Material: " + material;
+    if (largo || ancho || alto) {
+      descFinal += " | Medidas: " + (largo||"?") + " x " + (ancho||"?") + " x " + (alto||"?") + " cm";
+    }
+    if (dobleces)  descFinal += " | Dobleces: Pliege de " + dobleces;
+    if (cantidad)  descFinal += " | Cantidad: " + cantidad;
+
+    if (!fecha || !encargado || !cliente || !descripcion || !precio) {
+      alert("⚠️ Completá todos los campos obligatorios (*)");
+      return;
+    }
+
+    var btn = document.getElementById("btn-enviar");
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Enviando...';
+
+    var params = new URLSearchParams({
+      tipo_formulario: "nuevo_trabajo",
+      empresa:         "CORTE Y DOBLADO",
+      fecha:           fecha,
+      encargado:       encargado,
+      cliente:         cliente,
+      descripcion:     descFinal,
+      precio:          precio,
+      condicion:       condicion,
+      entrega:         entrega,
+      observaciones:   observaciones,
+      _t:              Date.now()
+    });
+
+    fetch(SCRIPT_URL + "?" + params.toString(), { method: "GET" })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.ok) {
+          document.getElementById("formulario").style.display = "none";
+          document.getElementById("pantalla-exito").style.display = "block";
+        } else {
+          alert("❌ Error: " + (d.error || "Respuesta inesperada"));
+          btn.disabled = false;
+          btn.innerHTML = "⚙️ Registrar trabajo";
+        }
+      })
+      .catch(function() {
+        alert("❌ Error de conexión. Revisá tu internet.");
+        btn.disabled = false;
+        btn.innerHTML = "⚙️ Registrar trabajo";
+      });
+  }
+
+  function reiniciar() {
+    document.getElementById("pantalla-exito").style.display = "none";
+    document.getElementById("formulario").style.display = "block";
+    document.getElementById("fecha").valueAsDate = new Date();
+    ["encargado","cliente","descripcion","material","cantidad",
+     "largo","ancho","alto","dobleces","precio","observaciones","fecha-entrega"]
+      .forEach(function(id) { document.getElementById(id).value = ""; });
+    document.getElementById("entrega").value = "0";
+    document.querySelector('input[name="condicion"][value="Contado"]').checked = true;
+    toggleEntrega();
+    var btn = document.getElementById("btn-enviar");
+    btn.disabled = false;
+    btn.innerHTML = "⚙️ Registrar trabajo";
+  }
 </script>
 </body>
 </html>
