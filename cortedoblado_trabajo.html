@@ -85,9 +85,10 @@
     <div class="campo">
       <label>Condición de pago <span class="req">*</span></label>
       <div class="radio-group">
-        <label class="rbtn"><input type="radio" name="cond" value="Contado" checked onchange="toggleEntrega()"/>💵 Contado</label>
-        <label class="rbtn"><input type="radio" name="cond" value="Credito" onchange="toggleEntrega()"/>💳 Crédito</label>
+        <button type="button" class="rbtn sel" id="btn-contado" onclick="selCond('Contado')">💵 Contado</button>
+        <button type="button" class="rbtn" id="btn-credito" onclick="selCond('Credito')">💳 Crédito</button>
       </div>
+      <input type="hidden" id="condicion" value="Contado"/>
     </div>
     <div id="bloque-entrega">
       <div class="campo"><label>Entrega inicial (Gs)</label><input type="number" id="entrega" placeholder="0" min="0" value="0" oninput="calcSaldo()"/></div>
@@ -108,14 +109,12 @@
 var URL = "https://script.google.com/macros/s/AKfycbyeLmGL7IuvlzFia0lwlIaFmw62mH9HtBPDKAWx6k17CWp7tPxhYtbMvacs91NsIww2/exec";
 document.getElementById("fecha").valueAsDate = new Date();
 
-function toggleEntrega(){
-var c=document.querySelector(‘input[name=“cond”]:checked’).value;
-document.getElementById(“bloque-entrega”).style.display=c===“Credito”?“block”:“none”;
-document.querySelectorAll(”.rbtn”).forEach(function(b){
-b.classList.remove(“sel”);
-if(b.querySelector(“input”).value===c) b.classList.add(“sel”);
-});
-if(c!==“Credito”){document.getElementById(“entrega”).value=“0”;calcSaldo();}
+function selCond(val){
+document.getElementById(“condicion”).value=val;
+document.getElementById(“btn-contado”).classList.toggle(“sel”,val===“Contado”);
+document.getElementById(“btn-credito”).classList.toggle(“sel”,val===“Credito”);
+document.getElementById(“bloque-entrega”).style.display=val===“Credito”?“block”:“none”;
+if(val!==“Credito”){document.getElementById(“entrega”).value=“0”;calcSaldo();}
 }
 function calcSaldo(){
 var p=parseFloat(document.getElementById(“precio”).value)||0;
@@ -130,7 +129,7 @@ var enc=document.getElementById(“encargado”).value.trim();
 var cli=document.getElementById(“cliente”).value.trim();
 var desc=document.getElementById(“descripcion”).value.trim();
 var precio=document.getElementById(“precio”).value;
-var cond=document.querySelector(‘input[name=“cond”]:checked’).value;
+var cond=document.getElementById(“condicion”).value;
 var entrega=document.getElementById(“entrega”).value||“0”;
 var mat=document.getElementById(“material”).value.trim();
 var cant=document.getElementById(“cantidad”).value;
@@ -181,8 +180,7 @@ document.getElementById(“fecha”).valueAsDate=new Date();
 document.querySelector(’.rbtn’).classList.add(“sel”);
 [“encargado”,“cliente”,“descripcion”,“material”,“cantidad”,“largo”,“ancho”,“alto”,“dobleces”,“precio”,“entrega”,“obs”,“fecha-entrega”]
 .forEach(function(id){document.getElementById(id).value=””;});
-document.querySelector(‘input[name=“cond”][value=“Contado”]’).checked=true;
-toggleEntrega();
+selCond(“Contado”);
 var btn=document.getElementById(“btn-env”);
 btn.disabled=false;
 btn.innerHTML=“⚙️ Registrar trabajo”;
