@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cierre del Día — METAL-IN</title>
-  <!-- Cache-busting: fuerza recarga en cada visita -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -18,22 +17,14 @@
       --laser:    #1A5276;
       --laser-cl: #D6EAF8;
       --laser-dk: #154360;
-      --gris:     #F4F6F7;
       --borde:    #D5D8DC;
       --texto:    #1C2833;
       --sub:      #717D7E;
       --danger:   #C0392B;
       --radius:   12px;
       --sombra:   0 2px 16px rgba(0,0,0,0.08);
-
-      /* Color activo según empresa seleccionada */
-      --activo:    #117A65;
-      --activo-cl: #D5F5E3;
-      --activo-dk: #0E6655;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'DM Sans', sans-serif;
       background: #EAECEE;
@@ -42,8 +33,8 @@
       color: var(--texto);
       transition: background 0.3s;
     }
-    body.laser-mode  { background: #EAF4FB; }
-    body.corte-mode  { background: #E9F7EF; }
+    body.laser-mode { background: #EAF4FB; }
+    body.corte-mode { background: #E9F7EF; }
 
     .header {
       background: linear-gradient(135deg, #2C3E50 0%, #1A252F 100%);
@@ -58,143 +49,99 @@
     .header.laser-hdr { background: linear-gradient(135deg, var(--laser) 0%, var(--laser-dk) 100%); box-shadow: 0 4px 20px rgba(26,82,118,0.3); }
     .header.corte-hdr { background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dk) 100%); box-shadow: 0 4px 20px rgba(17,122,101,0.3); }
     .header .emoji { font-size: 2.4rem; margin-bottom: 8px; display: block; }
-    .header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header h1 { font-size: 1.5rem; font-weight: 700; }
     .header p  { font-size: 0.9rem; opacity: 0.85; margin-top: 4px; }
 
-    /* ── Selector empresa ── */
-    .empresa-selector {
-      background: #fff;
-      border-radius: var(--radius);
-      padding: 20px 24px;
-      margin-bottom: 16px;
-      box-shadow: var(--sombra);
-    }
-    .empresa-selector .lbl {
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--sub);
-      margin-bottom: 12px;
-      display: block;
-    }
+    .empresa-selector { background: #fff; border-radius: var(--radius); padding: 20px 24px; margin-bottom: 16px; box-shadow: var(--sombra); }
+    .empresa-selector .lbl { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--sub); margin-bottom: 12px; display: block; }
     .empresa-btns { display: flex; gap: 12px; }
     .emp-btn {
-      flex: 1;
-      border: 2px solid var(--borde);
-      border-radius: 10px;
-      padding: 14px 16px;
-      cursor: pointer;
-      transition: all 0.25s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      background: #fff;
-      color: var(--sub);
+      flex: 1; border: 2px solid var(--borde); border-radius: 10px; padding: 14px 16px;
+      cursor: pointer; transition: all 0.25s; display: flex; align-items: center;
+      justify-content: center; gap: 10px; font-weight: 700; font-size: 0.95rem;
+      background: #fff; color: var(--sub);
     }
     .emp-btn input { display: none; }
-    .emp-btn.laser-sel  { border-color: var(--laser);  background: var(--laser-cl);  color: var(--laser-dk); }
-    .emp-btn.corte-sel  { border-color: var(--verde);  background: var(--verde-cl);  color: var(--verde-dk); }
+    .emp-btn.laser-sel { border-color: var(--laser); background: var(--laser-cl); color: var(--laser-dk); }
+    .emp-btn.corte-sel { border-color: var(--verde); background: var(--verde-cl); color: var(--verde-dk); }
 
-    .card {
-      background: #fff;
-      border-radius: var(--radius);
-      padding: 24px;
-      margin-bottom: 16px;
-      box-shadow: var(--sombra);
-      border-left: 4px solid #BDC3C7;
-      transition: border-color 0.3s;
-    }
+    .card { background: #fff; border-radius: var(--radius); padding: 24px; margin-bottom: 16px; box-shadow: var(--sombra); border-left: 4px solid #BDC3C7; transition: border-color 0.3s; }
     .card.laser-card { border-left-color: var(--laser); }
     .card.corte-card { border-left-color: var(--verde); }
-
-    .card-title {
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--sub);
-      margin-bottom: 18px;
-      transition: color 0.3s;
-    }
+    .card-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--sub); margin-bottom: 18px; transition: color 0.3s; }
     .card-title.laser-t { color: var(--laser); }
     .card-title.corte-t { color: var(--verde); }
 
     .campo { margin-bottom: 16px; }
-    label {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--sub);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+    label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--sub); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
     label .req { color: var(--danger); margin-left: 2px; }
 
-    input[type="text"],
-    input[type="date"],
-    input[type="number"],
-    textarea {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1.5px solid var(--borde);
-      border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      color: var(--texto);
-      background: #FDFEFE;
-      transition: border-color 0.2s, box-shadow 0.2s;
+    input[type="text"], input[type="date"], input[type="number"], textarea {
+      width: 100%; padding: 12px 14px; border: 1.5px solid var(--borde); border-radius: 8px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--texto);
+      background: #FDFEFE; transition: border-color 0.2s, box-shadow 0.2s;
     }
-    input:focus, textarea:focus {
-      outline: none;
-      border-color: var(--laser);
-      box-shadow: 0 0 0 3px rgba(26,82,118,0.12);
-      background: #fff;
-    }
-    body.corte-mode input:focus, body.corte-mode textarea:focus {
-      border-color: var(--verde);
-      box-shadow: 0 0 0 3px rgba(17,122,101,0.12);
-    }
+    input:focus, textarea:focus { outline: none; border-color: var(--laser); box-shadow: 0 0 0 3px rgba(26,82,118,0.12); background: #fff; }
+    body.corte-mode input:focus, body.corte-mode textarea:focus { border-color: var(--verde); box-shadow: 0 0 0 3px rgba(17,122,101,0.12); }
 
     .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     @media (max-width: 500px) { .grid2 { grid-template-columns: 1fr; } }
 
-    /* ── Saldo final destacado ── */
+    /* ── Créditos ── */
+    .creditos-loading { text-align: center; padding: 20px; color: var(--sub); font-size: 0.9rem; }
+    .credito-item {
+      border: 2px solid var(--borde); border-radius: 10px; padding: 14px 16px;
+      margin-bottom: 10px; cursor: pointer; transition: all 0.2s; background: #fff;
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .credito-item:hover { border-color: #aaa; }
+    .credito-item.sel-laser { border-color: var(--laser); background: var(--laser-cl); }
+    .credito-item.sel-corte { border-color: var(--verde); background: var(--verde-cl); }
+    .credito-check {
+      width: 22px; height: 22px; border: 2px solid var(--borde); border-radius: 6px;
+      flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; transition: all 0.2s;
+    }
+    .credito-item.sel-laser .credito-check { background: var(--laser); border-color: var(--laser); color: #fff; }
+    .credito-item.sel-corte .credito-check { background: var(--verde); border-color: var(--verde); color: #fff; }
+    .credito-info { flex: 1; min-width: 0; }
+    .credito-cliente { font-weight: 700; font-size: 0.95rem; margin-bottom: 3px; }
+    .credito-desc { font-size: 0.82rem; color: var(--sub); margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .credito-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+    .credito-tag { font-size: 0.75rem; font-weight: 600; padding: 3px 8px; border-radius: 20px; background: #F4F6F7; color: var(--sub); }
+    .credito-tag.monto { background: #FEF9E7; color: #7D6608; }
+    .credito-tag.fecha { background: #EBF5FB; color: #1A5276; }
+    .sin-creditos { text-align: center; padding: 24px; color: var(--sub); border: 2px dashed var(--borde); border-radius: 10px; font-size: 0.9rem; }
+
+    .total-creditos {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 16px; border-radius: 10px; margin-top: 4px;
+      background: #F8F9FA; border: 2px solid var(--borde); transition: all 0.3s;
+    }
+    .total-creditos.act-laser { background: var(--laser-cl); border-color: var(--laser); }
+    .total-creditos.act-corte { background: var(--verde-cl); border-color: var(--verde); }
+    .total-creditos span { font-size: 0.85rem; font-weight: 600; color: var(--sub); }
+    .total-creditos strong { font-size: 1.1rem; font-weight: 700; color: var(--texto); }
+    .total-creditos.act-laser strong { color: var(--laser-dk); }
+    .total-creditos.act-corte strong { color: var(--verde-dk); }
+
     .saldo-final-box {
-      background: #F8F9FA;
-      border: 2px solid var(--borde);
-      border-radius: 12px;
-      padding: 18px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-      transition: background 0.3s, border-color 0.3s;
+      background: #F8F9FA; border: 2px solid var(--borde); border-radius: 12px;
+      padding: 18px 20px; display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 16px; transition: background 0.3s, border-color 0.3s;
     }
     .saldo-final-box.laser-sf { background: var(--laser-cl); border-color: var(--laser); }
     .saldo-final-box.corte-sf { background: var(--verde-cl); border-color: var(--verde); }
     .saldo-final-box .sf-lbl { font-size: 0.9rem; font-weight: 600; color: var(--sub); }
-    .saldo-final-box .sf-val { font-size: 1.5rem; font-weight: 700; color: var(--texto); }
+    .saldo-final-box .sf-val { font-size: 1.5rem; font-weight: 700; }
     .saldo-final-box.laser-sf .sf-val { color: var(--laser-dk); }
     .saldo-final-box.corte-sf .sf-val { color: var(--verde-dk); }
 
     .btn {
-      width: 100%;
-      padding: 16px;
-      background: linear-gradient(135deg, #2C3E50 0%, #1A252F 100%);
-      color: #fff;
-      border: none;
-      border-radius: var(--radius);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 0.3px;
-      transition: opacity 0.2s, transform 0.15s, background 0.3s;
+      width: 100%; padding: 16px; background: linear-gradient(135deg, #2C3E50 0%, #1A252F 100%);
+      color: #fff; border: none; border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: opacity 0.2s, transform 0.15s;
       box-shadow: 0 4px 14px rgba(0,0,0,0.2);
     }
     .btn.laser-btn { background: linear-gradient(135deg, var(--laser) 0%, var(--laser-dk) 100%); box-shadow: 0 4px 14px rgba(26,82,118,0.3); }
@@ -202,46 +149,20 @@
     .btn:active { transform: scale(0.98); opacity: 0.9; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    .exito {
-      display: none;
-      background: #fff;
-      border-radius: var(--radius);
-      padding: 40px 24px;
-      text-align: center;
-      box-shadow: var(--sombra);
-      border-top: 5px solid var(--verde);
-    }
+    .exito { display: none; background: #fff; border-radius: var(--radius); padding: 40px 24px; text-align: center; box-shadow: var(--sombra); border-top: 5px solid var(--verde); }
     .exito.laser-ex { border-top-color: var(--laser); }
     .exito.corte-ex { border-top-color: var(--verde); }
     .exito .big-icon { font-size: 3.5rem; margin-bottom: 12px; }
     .exito h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
-    .exito p  { font-size: 0.9rem; color: var(--sub); margin-bottom: 24px; }
-    .btn-otro {
-      display: inline-block;
-      padding: 12px 28px;
-      border-radius: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      border: 2px solid;
-    }
+    .exito p { font-size: 0.9rem; color: var(--sub); margin-bottom: 6px; }
+    .exito .resumen { font-size: 0.85rem; color: var(--sub); margin-bottom: 24px; }
+    .btn-otro { display: inline-block; padding: 12px 28px; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; border: 2px solid; }
     .btn-otro.laser-ot { background: var(--laser-cl); color: var(--laser-dk); border-color: var(--laser); }
     .btn-otro.corte-ot { background: var(--verde-cl); color: var(--verde-dk); border-color: var(--verde); }
 
-    .spinner {
-      display: inline-block;
-      width: 18px; height: 18px;
-      border: 3px solid rgba(255,255,255,0.4);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      vertical-align: middle;
-      margin-right: 8px;
-    }
+    .spinner { display: inline-block; width: 18px; height: 18px; border: 3px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 8px; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ocultar formulario hasta seleccionar empresa */
     #form-cuerpo { display: none; }
   </style>
 </head>
@@ -254,22 +175,18 @@
     <p>Completar al final de cada día</p>
   </div>
 
-  <!-- SELECTOR EMPRESA -->
   <div class="empresa-selector">
     <span class="lbl">🏭 ¿Qué empresa estás cerrando?</span>
     <div class="empresa-btns">
       <label class="emp-btn" id="btn-laser" onclick="selEmpresa('LASER')">
-        <input type="radio" name="empresa" value="LASER" />
-        ⚡ LÁSER
+        <input type="radio" name="empresa" value="LASER" /> ⚡ LÁSER
       </label>
       <label class="emp-btn" id="btn-corte" onclick="selEmpresa('CORTE Y DOBLADO')">
-        <input type="radio" name="empresa" value="CORTE Y DOBLADO" />
-        ⚙️ CORTE Y DOBLADO
+        <input type="radio" name="empresa" value="CORTE Y DOBLADO" /> ⚙️ CORTE Y DOBLADO
       </label>
     </div>
   </div>
 
-  <!-- FORMULARIO (aparece al seleccionar empresa) -->
   <div id="form-cuerpo">
 
     <!-- DATOS -->
@@ -287,31 +204,36 @@
       </div>
     </div>
 
+    <!-- CRÉDITOS COBRADOS HOY -->
+    <div class="card" id="card-creditos">
+      <div class="card-title" id="title-creditos">💳 Créditos cobrados hoy</div>
+      <p style="font-size:0.85rem;color:var(--sub);margin-bottom:14px;">Tildá los créditos que cobraste hoy. El monto se suma automáticamente al saldo.</p>
+      <div id="creditos-lista">
+        <div class="creditos-loading">⏳ Seleccioná la empresa para ver los créditos pendientes...</div>
+      </div>
+      <div class="total-creditos" id="total-creditos-box" style="margin-top:12px;">
+        <span>Total créditos cobrados hoy:</span>
+        <strong id="total-creditos-texto">Gs. 0</strong>
+      </div>
+    </div>
+
     <!-- MOVIMIENTOS -->
     <div class="card" id="card-mov">
       <div class="card-title" id="title-mov">💰 Movimientos del día</div>
-
       <div class="campo">
         <label>Saldo anterior (Gs)</label>
         <input type="number" id="saldo_anterior" placeholder="0" min="0" value="0" oninput="calcSaldoFinal()" />
       </div>
-
       <div class="grid2">
         <div class="campo">
           <label>Cobros al contado (Gs)</label>
           <input type="number" id="cobros_contado" placeholder="0" min="0" value="0" oninput="calcSaldoFinal()" />
         </div>
         <div class="campo">
-          <label>Créditos cobrados (Gs)</label>
-          <input type="number" id="creditos_cobrados" placeholder="0" min="0" value="0" oninput="calcSaldoFinal()" />
+          <label>Transferencias recibidas (Gs)</label>
+          <input type="number" id="transferencias" placeholder="0" min="0" value="0" oninput="calcSaldoFinal()" />
         </div>
       </div>
-
-      <div class="campo">
-        <label>Transferencias recibidas (Gs)</label>
-        <input type="number" id="transferencias" placeholder="0" min="0" value="0" oninput="calcSaldoFinal()" />
-      </div>
-
       <div class="grid2">
         <div class="campo">
           <label>Gastos del día (Gs)</label>
@@ -322,7 +244,6 @@
           <input type="number" id="retiro" placeholder="0" min="0" value="0" oninput="calcSaldoFinal()" />
         </div>
       </div>
-
       <div class="campo">
         <label>Observaciones</label>
         <input type="text" id="observaciones" placeholder="Notas del día (opcional)" />
@@ -339,66 +260,130 @@
   </div>
 </div>
 
-<!-- PANTALLA ÉXITO -->
 <div class="exito" id="pantalla-exito">
   <div class="big-icon">✅</div>
   <h2 id="exito-titulo">¡Cierre registrado!</h2>
   <p>El cierre del día fue enviado correctamente.</p>
+  <p class="resumen" id="exito-resumen"></p>
   <button class="btn-otro" id="btn-otro" onclick="reiniciar()">📊 Registrar otro cierre</button>
 </div>
 
 <script>
   var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6L4spCxrYOk_luNvBw1AiqL-uw4mWGWM--kJg8Y1PXTTbsDVrAJoTsdnXldseOYHG/exec";
   var empresaActual = "";
+  var creditosPendientes = [];
+  var creditosSeleccionados = {};
+  window._totalCreditos = 0;
+  window._saldoFinal = 0;
 
   document.getElementById("fecha").valueAsDate = new Date();
 
   function selEmpresa(emp) {
     empresaActual = emp;
     var esLaser = emp === "LASER";
+    var suf = esLaser ? "laser" : "corte";
 
-    // Header
-    var hdr = document.getElementById("header");
-    hdr.className = "header " + (esLaser ? "laser-hdr" : "corte-hdr");
-    hdr.querySelector("h1").textContent = "Cierre del Día — " + (esLaser ? "LÁSER" : "CORTE Y DOBLADO");
-
-    // Botones empresa
+    document.getElementById("header").className = "header " + suf + "-hdr";
+    document.getElementById("header").querySelector("h1").textContent =
+      "Cierre del Día — " + (esLaser ? "LÁSER" : "CORTE Y DOBLADO");
     document.getElementById("btn-laser").className = "emp-btn" + (esLaser ? " laser-sel" : "");
     document.getElementById("btn-corte").className = "emp-btn" + (!esLaser ? " corte-sel" : "");
-
-    // Cuerpo
     document.getElementById("form-cuerpo").style.display = "block";
-
-    // Cards
-    var suf = esLaser ? "laser" : "corte";
-    document.getElementById("card-datos").className = "card " + suf + "-card";
-    document.getElementById("card-mov").className   = "card " + suf + "-card";
-    document.getElementById("title-datos").className = "card-title " + suf + "-t";
-    document.getElementById("title-mov").className   = "card-title " + suf + "-t";
-
-    // Saldo box
-    var sb = document.getElementById("saldo-final-box");
-    sb.className = "saldo-final-box " + suf + "-sf";
-
-    // Botón
-    var btn = document.getElementById("btn-enviar");
-    btn.className = "btn " + suf + "-btn";
-    btn.innerHTML = (esLaser ? "⚡" : "⚙️") + " Registrar cierre";
-
-    // Body
+    ["card-datos","card-creditos","card-mov"].forEach(function(id) {
+      document.getElementById(id).className = "card " + suf + "-card";
+    });
+    ["title-datos","title-creditos","title-mov"].forEach(function(id) {
+      document.getElementById(id).className = "card-title " + suf + "-t";
+    });
+    document.getElementById("saldo-final-box").className = "saldo-final-box " + suf + "-sf";
+    document.getElementById("btn-enviar").className = "btn " + suf + "-btn";
+    document.getElementById("btn-enviar").innerHTML = (esLaser ? "⚡" : "⚙️") + " Registrar cierre";
     document.body.className = suf + "-mode";
 
+    creditosSeleccionados = {};
+    cargarCreditosPendientes(emp);
     calcSaldoFinal();
+  }
+
+  function cargarCreditosPendientes(emp) {
+    document.getElementById("creditos-lista").innerHTML =
+      '<div class="creditos-loading">⏳ Cargando créditos pendientes...</div>';
+    actualizarTotalCreditos();
+
+    fetch(SCRIPT_URL + "?tipo_formulario=get_creditos&empresa=" + encodeURIComponent(emp) + "&_t=" + Date.now())
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        creditosPendientes = (d.ok && d.creditos) ? d.creditos : [];
+        renderizarCreditos();
+      })
+      .catch(function() {
+        document.getElementById("creditos-lista").innerHTML =
+          '<div class="sin-creditos">⚠️ Error de conexión al cargar créditos.</div>';
+      });
+  }
+
+  function renderizarCreditos() {
+    var lista = document.getElementById("creditos-lista");
+    if (!creditosPendientes.length) {
+      lista.innerHTML = '<div class="sin-creditos">✅ No hay créditos pendientes para esta empresa.</div>';
+      return;
+    }
+    var html = "";
+    creditosPendientes.forEach(function(c, i) {
+      html += '<div class="credito-item" id="cred-' + i + '" onclick="toggleCredito(' + i + ')">' +
+        '<div class="credito-check" id="check-' + i + '"></div>' +
+        '<div class="credito-info">' +
+          '<div class="credito-cliente">' + c.cliente + '</div>' +
+          '<div class="credito-desc">' + c.descripcion + '</div>' +
+          '<div class="credito-meta">' +
+            '<span class="credito-tag monto">💰 Saldo: Gs. ' + Number(c.saldo).toLocaleString("es-PY") + '</span>' +
+            '<span class="credito-tag fecha">📅 ' + c.fecha + '</span>' +
+            '<span class="credito-tag">Orden #' + c.fila + '</span>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    });
+    lista.innerHTML = html;
+  }
+
+  function toggleCredito(i) {
+    var esLaser = empresaActual === "LASER";
+    var selClass = esLaser ? "sel-laser" : "sel-corte";
+    var item  = document.getElementById("cred-" + i);
+    var check = document.getElementById("check-" + i);
+
+    if (creditosSeleccionados[i]) {
+      delete creditosSeleccionados[i];
+      item.className = "credito-item";
+      check.textContent = "";
+    } else {
+      creditosSeleccionados[i] = creditosPendientes[i];
+      item.className = "credito-item " + selClass;
+      check.textContent = "✓";
+    }
+    actualizarTotalCreditos();
+    calcSaldoFinal();
+  }
+
+  function actualizarTotalCreditos() {
+    var total = 0;
+    Object.values(creditosSeleccionados).forEach(function(c) {
+      total += parseFloat(c.saldo) || 0;
+    });
+    document.getElementById("total-creditos-texto").textContent =
+      "Gs. " + total.toLocaleString("es-PY");
+    var esLaser = empresaActual === "LASER";
+    var box = document.getElementById("total-creditos-box");
+    box.className = "total-creditos" + (total > 0 ? (" act-" + (esLaser ? "laser" : "corte")) : "");
+    window._totalCreditos = total;
   }
 
   function n(id) { return parseFloat(document.getElementById(id).value) || 0; }
 
   function calcSaldoFinal() {
-    var total = n("saldo_anterior") + n("cobros_contado") + n("creditos_cobrados") + n("transferencias")
+    var total = n("saldo_anterior") + n("cobros_contado") + (window._totalCreditos||0) + n("transferencias")
               - n("gastos") - n("retiro");
-    document.getElementById("saldo-final-texto").textContent =
-      "Gs. " + total.toLocaleString("es-PY");
-    // Guardar internamente para envío
+    document.getElementById("saldo-final-texto").textContent = "Gs. " + total.toLocaleString("es-PY");
     window._saldoFinal = total;
   }
 
@@ -406,15 +391,17 @@
     if (!empresaActual) { alert("⚠️ Seleccioná una empresa primero"); return; }
     var fecha     = document.getElementById("fecha").value;
     var encargado = document.getElementById("encargado").value.trim();
-
-    if (!fecha || !encargado) {
-      alert("⚠️ Completá todos los campos obligatorios (*)");
-      return;
-    }
+    if (!fecha || !encargado) { alert("⚠️ Completá los campos obligatorios (*)"); return; }
 
     var btn = document.getElementById("btn-enviar");
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span> Enviando...';
+
+    var creditosCobrados = Object.values(creditosSeleccionados);
+    var creditosJSON = JSON.stringify(creditosCobrados.map(function(c) {
+      return { fila: c.fila, cliente: c.cliente, saldo: c.saldo,
+               descripcion: c.descripcion, fecha_credito: c.fecha };
+    }));
 
     var params = new URLSearchParams({
       tipo_formulario:   "cierre_metalin",
@@ -423,12 +410,13 @@
       encargado:         encargado,
       saldo_anterior:    n("saldo_anterior"),
       cobros_contado:    n("cobros_contado"),
-      creditos_cobrados: n("creditos_cobrados"),
+      creditos_cobrados: window._totalCreditos || 0,
       transferencias:    n("transferencias"),
       gastos:            n("gastos"),
       retiro:            n("retiro"),
       saldo_final:       window._saldoFinal || 0,
       observaciones:     document.getElementById("observaciones").value.trim(),
+      creditos_detalle:  creditosJSON,
       _t:                Date.now()
     });
 
@@ -441,8 +429,12 @@
           exito.className = "exito " + (esLaser ? "laser-ex" : "corte-ex");
           document.getElementById("exito-titulo").textContent =
             "¡Cierre de " + (esLaser ? "LÁSER" : "CORTE Y DOBLADO") + " registrado!";
-          var btnOtro = document.getElementById("btn-otro");
-          btnOtro.className = "btn-otro " + (esLaser ? "laser-ot" : "corte-ot");
+          document.getElementById("exito-resumen").textContent = creditosCobrados.length > 0
+            ? creditosCobrados.length + " crédito(s) cobrado(s) — Total: Gs. " +
+              (window._totalCreditos||0).toLocaleString("es-PY")
+            : "Sin créditos cobrados hoy.";
+          document.getElementById("btn-otro").className =
+            "btn-otro " + (esLaser ? "laser-ot" : "corte-ot");
           document.getElementById("formulario").style.display = "none";
           exito.style.display = "block";
         } else {
@@ -452,7 +444,7 @@
         }
       })
       .catch(function() {
-        alert("❌ Error de conexión. Revisá tu internet.");
+        alert("❌ Error de conexión.");
         btn.disabled = false;
         btn.innerHTML = "📊 Registrar cierre";
       });
@@ -465,15 +457,22 @@
     document.getElementById("fecha").valueAsDate = new Date();
     document.getElementById("encargado").value = "";
     document.getElementById("observaciones").value = "";
-    ["saldo_anterior","cobros_contado","creditos_cobrados","transferencias","gastos","retiro"]
+    ["saldo_anterior","cobros_contado","transferencias","gastos","retiro"]
       .forEach(function(id) { document.getElementById(id).value = "0"; });
     document.getElementById("saldo-final-texto").textContent = "Gs. 0";
+    document.getElementById("total-creditos-texto").textContent = "Gs. 0";
+    document.getElementById("total-creditos-box").className = "total-creditos";
+    document.getElementById("creditos-lista").innerHTML =
+      '<div class="creditos-loading">⏳ Seleccioná la empresa para ver los créditos pendientes...</div>';
     document.getElementById("btn-laser").className = "emp-btn";
     document.getElementById("btn-corte").className = "emp-btn";
     document.getElementById("header").className = "header";
     document.getElementById("header").querySelector("h1").textContent = "Cierre del Día — METAL-IN";
     document.body.className = "";
     empresaActual = "";
+    creditosSeleccionados = {};
+    window._totalCreditos = 0;
+    window._saldoFinal = 0;
     var btn = document.getElementById("btn-enviar");
     btn.disabled = false;
     btn.innerHTML = "📊 Registrar cierre";
