@@ -31,7 +31,7 @@
     .radio-group{display:flex;gap:10px;flex-wrap:wrap}
     .rbtn{flex:1;min-width:110px;border:2px solid var(--borde);border-radius:10px;padding:11px 14px;cursor:pointer;display:flex;align-items:center;gap:8px;font-weight:600;font-size:0.88rem;background:#fff;transition:all 0.2s}
     .rbtn input{display:none}
-    .rbtn:has(input:checked){border-color:var(--c);background:var(--cl);color:var(--dk)}
+    .rbtn.sel{border-color:var(--c);background:var(--cl);color:var(--dk)}
     #bloque-entrega{display:none}
     .saldo-box{background:var(--cl);border:2px solid var(--c);border-radius:10px;padding:13px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:4px}
     .saldo-box span{font-size:0.83rem;font-weight:600;color:var(--dk)}
@@ -111,6 +111,10 @@ document.getElementById("fecha").valueAsDate = new Date();
 function toggleEntrega(){
 var c=document.querySelector(‘input[name=“cond”]:checked’).value;
 document.getElementById(“bloque-entrega”).style.display=c===“Credito”?“block”:“none”;
+document.querySelectorAll(”.rbtn”).forEach(function(b){
+b.classList.remove(“sel”);
+if(b.querySelector(“input”).value===c) b.classList.add(“sel”);
+});
 if(c!==“Credito”){document.getElementById(“entrega”).value=“0”;calcSaldo();}
 }
 function calcSaldo(){
@@ -173,6 +177,8 @@ function reiniciar(){
 document.getElementById(“exito”).style.display=“none”;
 document.getElementById(“form”).style.display=“block”;
 document.getElementById(“fecha”).valueAsDate=new Date();
+// Marcar Contado como seleccionado al inicio
+document.querySelector(’.rbtn’).classList.add(“sel”);
 [“encargado”,“cliente”,“descripcion”,“material”,“cantidad”,“largo”,“ancho”,“alto”,“dobleces”,“precio”,“entrega”,“obs”,“fecha-entrega”]
 .forEach(function(id){document.getElementById(id).value=””;});
 document.querySelector(‘input[name=“cond”][value=“Contado”]’).checked=true;
