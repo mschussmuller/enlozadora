@@ -346,23 +346,30 @@
       '<div class="creditos-loading">⏳ Cargando créditos pendientes...</div>';
     actualizarTotalCreditos();
 
-    var url = SCRIPT_URL + "?tipo_formulario=get_creditos&empresa=" + encodeURIComponent(emp) + "&_t=" + Date.now();
-    fetch(url, { method: "GET", redirect: "follow" })
-      .then(function(r) {
-        // Google Apps Script a veces devuelve texto plano con el JSON
-        return r.text();
-      })
-      .then(function(txt) {
-        // Limpiar posibles caracteres extra y parsear
-        var clean = txt.replace(/^\)\]\}'/, "").trim();
-        var d = JSON.parse(clean);
-        creditosPendientes = (d.ok && d.creditos) ? d.creditos : [];
-        renderizarCreditos();
-      })
-      .catch(function() {
-        document.getElementById("creditos-lista").innerHTML =
-          '<div class="sin-creditos">⚠️ Error de conexión al cargar créditos.</div>';
-      });
+    // Usar JSONP para evitar bloqueo CORS de GitHub Pages
+    var callbackName = "cbCreditos_" + Date.now();
+    var script = document.createElement("script");
+    var timeout = setTimeout(function() {
+      document.getElementById("creditos-lista").innerHTML =
+        '<div class="sin-creditos">⚠️ Error de conexión al cargar créditos.</div>';
+      delete window[callbackName];
+      if (script.parentNode) script.parentNode.removeChild(script);
+    }, 8000);
+
+    window[callbackName] = function(d) {
+      clearTimeout(timeout);
+      delete window[callbackName];
+      if (script.parentNode) script.parentNode.removeChild(script);
+      creditosPendientes = (d.ok && d.creditos) ? d.creditos : [];
+      renderizarCreditos();
+    };
+
+    script.src = SCRIPT_URL +
+      "?tipo_formulario=get_creditos" +
+      "&empresa=" + encodeURIComponent(emp) +
+      "&callback=" + callbackName +
+      "&_t=" + Date.now();
+    document.head.appendChild(script);
   }
 
   function renderizarCreditos() {
