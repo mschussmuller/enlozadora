@@ -346,9 +346,16 @@
       '<div class="creditos-loading">⏳ Cargando créditos pendientes...</div>';
     actualizarTotalCreditos();
 
-    fetch(SCRIPT_URL + "?tipo_formulario=get_creditos&empresa=" + encodeURIComponent(emp) + "&_t=" + Date.now())
-      .then(function(r) { return r.json(); })
-      .then(function(d) {
+    var url = SCRIPT_URL + "?tipo_formulario=get_creditos&empresa=" + encodeURIComponent(emp) + "&_t=" + Date.now();
+    fetch(url, { method: "GET", redirect: "follow" })
+      .then(function(r) {
+        // Google Apps Script a veces devuelve texto plano con el JSON
+        return r.text();
+      })
+      .then(function(txt) {
+        // Limpiar posibles caracteres extra y parsear
+        var clean = txt.replace(/^\)\]\}'/, "").trim();
+        var d = JSON.parse(clean);
         creditosPendientes = (d.ok && d.creditos) ? d.creditos : [];
         renderizarCreditos();
       })
