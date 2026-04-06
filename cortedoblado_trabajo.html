@@ -1,454 +1,187 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nuevo Trabajo — CORTE Y DOBLADO</title>
-  <!-- Cache-busting: fuerza recarga en cada visita -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --verde:    #117A65;
-      --verde-cl: #D5F5E3;
-      --verde-dk: #0E6655;
-      --gris:     #F4F6F7;
-      --borde:    #D5D8DC;
-      --texto:    #1C2833;
-      --sub:      #717D7E;
-      --danger:   #C0392B;
-      --radius:   12px;
-      --sombra:   0 2px 16px rgba(0,0,0,0.08);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: #E9F7EF;
-      min-height: 100vh;
-      padding: 24px 16px 48px;
-      color: var(--texto);
-    }
-
-    .header {
-      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dk) 100%);
-      border-radius: var(--radius);
-      padding: 28px 24px 22px;
-      margin-bottom: 24px;
-      color: #fff;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(17,122,101,0.3);
-    }
-    .header .emoji { font-size: 2.4rem; margin-bottom: 8px; display: block; }
-    .header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.3px; }
-    .header p  { font-size: 0.9rem; opacity: 0.85; margin-top: 4px; }
-
-    .card {
-      background: #fff;
-      border-radius: var(--radius);
-      padding: 24px;
-      margin-bottom: 16px;
-      box-shadow: var(--sombra);
-      border-left: 4px solid var(--verde);
-    }
-    .card-title {
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--verde);
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .campo { margin-bottom: 16px; }
-    label {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--sub);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    label .req { color: var(--danger); margin-left: 2px; }
-
-    input[type="text"],
-    input[type="date"],
-    input[type="number"],
-    textarea,
-    select {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1.5px solid var(--borde);
-      border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      color: var(--texto);
-      background: #FDFEFE;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      appearance: none;
-    }
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: var(--verde);
-      box-shadow: 0 0 0 3px rgba(17,122,101,0.12);
-      background: #fff;
-    }
-    textarea { resize: vertical; min-height: 80px; }
-
-    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-    @media (max-width: 500px) {
-      .grid2 { grid-template-columns: 1fr; }
-      .grid3 { grid-template-columns: 1fr 1fr; }
-    }
-
-    .radio-group { display: flex; gap: 12px; flex-wrap: wrap; }
-    .radio-btn {
-      flex: 1; min-width: 120px;
-      border: 2px solid var(--borde);
-      border-radius: 10px;
-      padding: 12px 16px;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      background: #fff;
-    }
-    .radio-btn input { display: none; }
-    .radio-btn:has(input:checked) {
-      border-color: var(--verde);
-      background: var(--verde-cl);
-      color: var(--verde-dk);
-    }
-
-    .saldo-box {
-      background: var(--verde-cl);
-      border: 2px solid var(--verde);
-      border-radius: 10px;
-      padding: 14px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 4px;
-    }
-    .saldo-box span { font-size: 0.85rem; font-weight: 600; color: var(--verde-dk); }
-    .saldo-box strong { font-size: 1.2rem; font-weight: 700; color: var(--verde-dk); }
-
-    .btn {
-      width: 100%;
-      padding: 16px;
-      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dk) 100%);
-      color: #fff;
-      border: none;
-      border-radius: var(--radius);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 0.3px;
-      transition: opacity 0.2s, transform 0.15s;
-      box-shadow: 0 4px 14px rgba(17,122,101,0.3);
-    }
-    .btn:active { transform: scale(0.98); opacity: 0.9; }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .exito {
-      display: none;
-      background: #fff;
-      border-radius: var(--radius);
-      padding: 40px 24px;
-      text-align: center;
-      box-shadow: var(--sombra);
-      border-top: 5px solid var(--verde);
-    }
-    .exito .big-icon { font-size: 3.5rem; margin-bottom: 12px; }
-    .exito h2 { font-size: 1.3rem; font-weight: 700; color: var(--verde-dk); margin-bottom: 8px; }
-    .exito p  { font-size: 0.9rem; color: var(--sub); margin-bottom: 24px; }
-    .btn-otro {
-      display: inline-block;
-      padding: 12px 28px;
-      background: var(--verde-cl);
-      color: var(--verde-dk);
-      border-radius: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      border: 2px solid var(--verde);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-    }
-
-    .spinner {
-      display: inline-block;
-      width: 18px; height: 18px;
-      border: 3px solid rgba(255,255,255,0.4);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      vertical-align: middle;
-      margin-right: 8px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    #bloque-entrega { display: none; }
-
-    /* etiqueta medidas */
-    .medidas-label {
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--sub);
-      margin-bottom: 8px;
-      display: block;
-    }
+    :root{--c:#117A65;--cl:#D5F5E3;--dk:#0E6655;--borde:#D5D8DC;--sub:#717D7E;--danger:#C0392B;--r:12px;--s:0 2px 16px rgba(0,0,0,0.08)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:#E9F7EF;min-height:100vh;padding:20px 16px 48px;color:#1C2833}
+    .hdr{background:linear-gradient(135deg,var(--c),var(--dk));border-radius:var(--r);padding:26px 22px 20px;margin-bottom:20px;color:#fff;text-align:center;box-shadow:0 4px 20px rgba(17,122,101,0.3)}
+    .hdr .ico{font-size:2.2rem;display:block;margin-bottom:7px}
+    .hdr h1{font-size:1.4rem;font-weight:700}
+    .hdr p{font-size:0.87rem;opacity:0.85;margin-top:3px}
+    .card{background:#fff;border-radius:var(--r);padding:22px;margin-bottom:14px;box-shadow:var(--s);border-left:4px solid var(--c)}
+    .ct{font-size:0.74rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--c);margin-bottom:16px}
+    .campo{margin-bottom:14px}
+    label{display:block;font-size:0.78rem;font-weight:600;color:var(--sub);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px}
+    .req{color:var(--danger)}
+    input,textarea,select{width:100%;padding:11px 13px;border:1.5px solid var(--borde);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.94rem;color:#1C2833;background:#FDFEFE;transition:border-color 0.2s}
+    input:focus,textarea:focus,select:focus{outline:none;border-color:var(--c);box-shadow:0 0 0 3px rgba(17,122,101,0.1)}
+    textarea{resize:vertical;min-height:75px}
+    .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+    @media(max-width:480px){.g2{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr}}
+    .radio-group{display:flex;gap:10px;flex-wrap:wrap}
+    .rbtn{flex:1;min-width:110px;border:2px solid var(--borde);border-radius:10px;padding:11px 14px;cursor:pointer;display:flex;align-items:center;gap:8px;font-weight:600;font-size:0.88rem;background:#fff;transition:all 0.2s}
+    .rbtn input{display:none}
+    .rbtn:has(input:checked){border-color:var(--c);background:var(--cl);color:var(--dk)}
+    #bloque-entrega{display:none}
+    .saldo-box{background:var(--cl);border:2px solid var(--c);border-radius:10px;padding:13px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+    .saldo-box span{font-size:0.83rem;font-weight:600;color:var(--dk)}
+    .saldo-box strong{font-size:1.15rem;font-weight:700;color:var(--dk)}
+    .btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--c),var(--dk));color:#fff;border:none;border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(17,122,101,0.3);transition:all 0.2s}
+    .btn:active{transform:scale(0.98)}
+    .btn:disabled{opacity:0.5;cursor:not-allowed}
+    .exito{display:none;background:#fff;border-radius:var(--r);padding:40px 22px;text-align:center;box-shadow:var(--s);border-top:5px solid var(--c)}
+    .exito .big{font-size:3.5rem;margin-bottom:12px}
+    .exito h2{font-size:1.25rem;font-weight:700;color:var(--dk);margin-bottom:8px}
+    .exito p{font-size:0.88rem;color:var(--sub);margin-bottom:22px}
+    .btn-otro{display:inline-block;padding:11px 26px;background:var(--cl);color:var(--dk);border-radius:10px;font-weight:700;cursor:pointer;border:2px solid var(--c);font-family:'DM Sans',sans-serif;font-size:0.93rem}
+    .spin{display:inline-block;width:17px;height:17px;border:3px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:sp 0.7s linear infinite;vertical-align:middle;margin-right:7px}
+    @keyframes sp{to{transform:rotate(360deg)}}
   </style>
 </head>
 <body>
-
-<div id="formulario">
-  <div class="header">
-    <span class="emoji">⚙️</span>
+<div id="form">
+  <div class="hdr">
+    <span class="ico">⚙️</span>
     <h1>Nuevo Trabajo — CORTE Y DOBLADO</h1>
     <p>Registrar pedido de cliente</p>
   </div>
-
-  <!-- DATOS GENERALES -->
   <div class="card">
-    <div class="card-title">📋 Datos del trabajo</div>
-
-    <div class="grid2">
-      <div class="campo">
-        <label>Fecha <span class="req">*</span></label>
-        <input type="date" id="fecha" required />
-      </div>
-      <div class="campo">
-        <label>Encargado <span class="req">*</span></label>
-        <input type="text" id="encargado" placeholder="Tu nombre" required />
-      </div>
+    <div class="ct">📋 Datos del trabajo</div>
+    <div class="g2">
+      <div class="campo"><label>Fecha <span class="req">*</span></label><input type="date" id="fecha"/></div>
+      <div class="campo"><label>Encargado <span class="req">*</span></label><input type="text" id="encargado" placeholder="Tu nombre"/></div>
     </div>
-
-    <div class="campo">
-      <label>Cliente <span class="req">*</span></label>
-      <input type="text" id="cliente" placeholder="Nombre del cliente" required />
-    </div>
+    <div class="campo"><label>Cliente <span class="req">*</span></label><input type="text" id="cliente" placeholder="Nombre del cliente"/></div>
   </div>
-
-  <!-- DESCRIPCIÓN Y MEDIDAS -->
   <div class="card">
-    <div class="card-title">⚙️ Descripción y medidas del trabajo</div>
-
-    <div class="campo">
-      <label>Descripción del trabajo <span class="req">*</span></label>
-      <textarea id="descripcion" placeholder="Describí el trabajo (ej: Caja metálica, tapa, soporte...)" required></textarea>
+    <div class="ct">⚙️ Descripción y medidas</div>
+    <div class="campo"><label>Descripción del trabajo <span class="req">*</span></label><textarea id="descripcion" placeholder="Describí el trabajo (ej: Caja metálica, tapa, soporte...)"></textarea></div>
+    <div class="g2">
+      <div class="campo"><label>Material y espesor</label><input type="text" id="material" placeholder="Ej: Chapa 1.2mm"/></div>
+      <div class="campo"><label>Cantidad de piezas</label><input type="number" id="cantidad" placeholder="Ej: 5" min="1"/></div>
     </div>
-
-    <div class="grid2">
-      <div class="campo">
-        <label>Material y espesor</label>
-        <input type="text" id="material" placeholder="Ej: Chapa galvanizada 1.2mm" />
-      </div>
-      <div class="campo">
-        <label>Cantidad de piezas</label>
-        <input type="number" id="cantidad" placeholder="Ej: 5" min="1" />
+    <div class="campo"><label>Medidas (cm) — Largo / Ancho / Alto</label>
+      <div class="g3">
+        <input type="number" id="largo" placeholder="Largo" min="0" step="0.1"/>
+        <input type="number" id="ancho" placeholder="Ancho" min="0" step="0.1"/>
+        <input type="number" id="alto" placeholder="Alto" min="0" step="0.1"/>
       </div>
     </div>
-
-    <div class="campo">
-      <span class="medidas-label">Medidas (cm)</span>
-      <div class="grid3">
-        <div>
-          <label>Largo</label>
-          <input type="number" id="largo" placeholder="0" min="0" step="0.1" />
-        </div>
-        <div>
-          <label>Ancho</label>
-          <input type="number" id="ancho" placeholder="0" min="0" step="0.1" />
-        </div>
-        <div>
-          <label>Alto</label>
-          <input type="number" id="alto" placeholder="0" min="0" step="0.1" />
-        </div>
-      </div>
-    </div>
-
-    <div class="campo">
-      <label>Dobleces / Pliegues</label>
-      <input type="number" id="dobleces" placeholder="Ej: 4" min="0" />
-    </div>
+    <div class="campo"><label>Dobleces / Pliegues</label><input type="number" id="dobleces" placeholder="Ej: 4" min="0"/></div>
   </div>
-
-  <!-- PRECIO Y PAGO -->
   <div class="card">
-    <div class="card-title">💰 Precio y forma de pago</div>
-
-    <div class="campo">
-      <label>Precio total presupuestado (Gs) <span class="req">*</span></label>
-      <input type="number" id="precio" placeholder="0" min="0" required />
-    </div>
-
+    <div class="ct">💰 Precio y forma de pago</div>
+    <div class="campo"><label>Precio total (Gs) <span class="req">*</span></label><input type="number" id="precio" placeholder="0" min="0"/></div>
     <div class="campo">
       <label>Condición de pago <span class="req">*</span></label>
       <div class="radio-group">
-        <label class="radio-btn">
-          <input type="radio" name="condicion" value="Contado" checked onchange="toggleEntrega()" />
-          💵 Contado
-        </label>
-        <label class="radio-btn">
-          <input type="radio" name="condicion" value="Credito" onchange="toggleEntrega()" />
-          💳 Crédito
-        </label>
+        <label class="rbtn"><input type="radio" name="cond" value="Contado" checked onchange="toggleEntrega()"/>💵 Contado</label>
+        <label class="rbtn"><input type="radio" name="cond" value="Credito" onchange="toggleEntrega()"/>💳 Crédito</label>
       </div>
     </div>
-
     <div id="bloque-entrega">
-      <div class="campo">
-        <label>Entrega inicial (Gs)</label>
-        <input type="number" id="entrega" placeholder="0" min="0" value="0" oninput="calcSaldo()" />
-      </div>
-      <div class="saldo-box">
-        <span>Saldo pendiente:</span>
-        <strong id="saldo-texto">Gs. 0</strong>
-      </div>
+      <div class="campo"><label>Entrega inicial (Gs)</label><input type="number" id="entrega" placeholder="0" min="0" value="0" oninput="calcSaldo()"/></div>
+      <div class="saldo-box"><span>Saldo pendiente:</span><strong id="saldo-txt">Gs. 0</strong></div>
     </div>
-
-    <div class="campo" style="margin-top:16px;">
-      <label>Fecha estimada de entrega</label>
-      <input type="date" id="fecha-entrega" />
-    </div>
-
-    <div class="campo">
-      <label>Observaciones</label>
-      <textarea id="observaciones" placeholder="Notas adicionales (opcional)"></textarea>
-    </div>
+    <div class="campo" style="margin-top:14px"><label>Fecha estimada de entrega</label><input type="date" id="fecha-entrega"/></div>
+    <div class="campo"><label>Observaciones</label><textarea id="obs" placeholder="Notas adicionales (opcional)"></textarea></div>
   </div>
-
-  <button class="btn" id="btn-enviar" onclick="enviar()">⚙️ Registrar trabajo</button>
+  <button class="btn" id="btn-env" onclick="enviar()">⚙️ Registrar trabajo</button>
 </div>
-
-<!-- PANTALLA ÉXITO -->
-<div class="exito" id="pantalla-exito">
-  <div class="big-icon">⚙️</div>
+<div class="exito" id="exito">
+  <div class="big">⚙️</div>
   <h2>¡Trabajo registrado!</h2>
   <p>El pedido fue enviado correctamente a administración.</p>
   <button class="btn-otro" onclick="reiniciar()">⚙️ Registrar otro trabajo</button>
 </div>
-
 <script>
-  var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyeLmGL7IuvlzFia0lwlIaFmw62mH9HtBPDKAWx6k17CWp7tPxhYtbMvacs91NsIww2/exec";
+var URL = "https://script.google.com/macros/s/AKfycbyeLmGL7IuvlzFia0lwlIaFmw62mH9HtBPDKAWx6k17CWp7tPxhYtbMvacs91NsIww2/exec";
+document.getElementById("fecha").valueAsDate = new Date();
 
-  document.getElementById("fecha").valueAsDate = new Date();
+function toggleEntrega(){
+var c=document.querySelector(‘input[name=“cond”]:checked’).value;
+document.getElementById(“bloque-entrega”).style.display=c===“Credito”?“block”:“none”;
+if(c!==“Credito”){document.getElementById(“entrega”).value=“0”;calcSaldo();}
+}
+function calcSaldo(){
+var p=parseFloat(document.getElementById(“precio”).value)||0;
+var e=parseFloat(document.getElementById(“entrega”).value)||0;
+document.getElementById(“saldo-txt”).textContent=“Gs. “+Math.max(0,p-e).toLocaleString(“es-PY”);
+}
+document.getElementById(“precio”).addEventListener(“input”,calcSaldo);
 
-  function toggleEntrega() {
-    var cond = document.querySelector('input[name="condicion"]:checked').value;
-    document.getElementById("bloque-entrega").style.display =
-      cond === "Credito" ? "block" : "none";
-    if (cond !== "Credito") {
-      document.getElementById("entrega").value = "0";
-      calcSaldo();
-    }
-  }
+function enviar(){
+var fecha=document.getElementById(“fecha”).value;
+var enc=document.getElementById(“encargado”).value.trim();
+var cli=document.getElementById(“cliente”).value.trim();
+var desc=document.getElementById(“descripcion”).value.trim();
+var precio=document.getElementById(“precio”).value;
+var cond=document.querySelector(‘input[name=“cond”]:checked’).value;
+var entrega=document.getElementById(“entrega”).value||“0”;
+var mat=document.getElementById(“material”).value.trim();
+var cant=document.getElementById(“cantidad”).value;
+var largo=document.getElementById(“largo”).value;
+var ancho=document.getElementById(“ancho”).value;
+var alto=document.getElementById(“alto”).value;
+var dob=document.getElementById(“dobleces”).value;
+var obs=document.getElementById(“obs”).value.trim();
 
-  function calcSaldo() {
-    var precio  = parseFloat(document.getElementById("precio").value)  || 0;
-    var entrega = parseFloat(document.getElementById("entrega").value) || 0;
-    var saldo   = Math.max(0, precio - entrega);
-    document.getElementById("saldo-texto").textContent =
-      "Gs. " + saldo.toLocaleString("es-PY");
-  }
-  document.getElementById("precio").addEventListener("input", calcSaldo);
+if(!fecha||!enc||!cli||!desc||!precio){alert(“⚠️ Completá los campos obligatorios (*)”);return;}
 
-  function enviar() {
-    var fecha       = document.getElementById("fecha").value;
-    var encargado   = document.getElementById("encargado").value.trim();
-    var cliente     = document.getElementById("cliente").value.trim();
-    var descripcion = document.getElementById("descripcion").value.trim();
-    var precio      = document.getElementById("precio").value;
-    var condicion   = document.querySelector('input[name="condicion"]:checked').value;
-    var entrega     = document.getElementById("entrega").value || "0";
-    var material    = document.getElementById("material").value.trim();
-    var cantidad    = document.getElementById("cantidad").value;
-    var largo       = document.getElementById("largo").value;
-    var ancho       = document.getElementById("ancho").value;
-    var alto        = document.getElementById("alto").value;
-    var dobleces    = document.getElementById("dobleces").value;
-    var observaciones = document.getElementById("observaciones").value.trim();
+var descFinal=desc;
+if(mat) descFinal+=” | Material: “+mat;
+if(largo||ancho||alto) descFinal+=” | Medidas: “+(largo||”?”)+”|”+(ancho||”?”)+”|”+(alto||”?”)+” cm”;
+if(dob) descFinal+=” | Dobleces: “+dob;
+if(cant) descFinal+=” | Cantidad: “+cant;
 
-    // Armar descripción completa con todos los detalles
-    var descFinal = descripcion;
-    if (material)  descFinal += " | Material: " + material;
-    if (largo || ancho || alto) {
-      descFinal += " | Medidas: " + (largo||"?") + " x " + (ancho||"?") + " x " + (alto||"?") + " cm";
-    }
-    if (dobleces)  descFinal += " | Dobleces: Pliege de " + dobleces;
-    if (cantidad)  descFinal += " | Cantidad: " + cantidad;
+var btn=document.getElementById(“btn-env”);
+btn.disabled=true;
+btn.innerHTML=’<span class="spin"></span>Enviando…’;
 
-    if (!fecha || !encargado || !cliente || !descripcion || !precio) {
-      alert("⚠️ Completá todos los campos obligatorios (*)");
-      return;
-    }
+var params=new URLSearchParams({
+tipo_formulario:“nuevo_trabajo”,
+empresa:“CORTE Y DOBLADO”,
+fecha:fecha, encargado:enc, cliente:cli,
+descripcion:descFinal, precio:precio,
+condicion:cond, entrega:entrega,
+observaciones:obs, _t:Date.now()
+});
 
-    var btn = document.getElementById("btn-enviar");
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span> Enviando...';
+fetch(URL, {method:“POST”, mode:“no-cors”, body:params})
+.then(function(){
+document.getElementById(“form”).style.display=“none”;
+document.getElementById(“exito”).style.display=“block”;
+})
+.catch(function(){
+alert(“❌ Error de conexión.”);
+btn.disabled=false;
+btn.innerHTML=“⚙️ Registrar trabajo”;
+});
+}
 
-    var params = new URLSearchParams({
-      tipo_formulario: "nuevo_trabajo",
-      empresa:         "CORTE Y DOBLADO",
-      fecha:           fecha,
-      encargado:       encargado,
-      cliente:         cliente,
-      descripcion:     descFinal,
-      precio:          precio,
-      condicion:       condicion,
-      entrega:         entrega,
-      observaciones:   observaciones,
-      _t:              Date.now()
-    });
-
-    fetch(SCRIPT_URL + "?" + params.toString(), { method: "GET" })
-      .then(function(r) { return r.json(); })
-      .then(function(d) {
-        if (d.ok) {
-          document.getElementById("formulario").style.display = "none";
-          document.getElementById("pantalla-exito").style.display = "block";
-        } else {
-          alert("❌ Error: " + (d.error || "Respuesta inesperada"));
-          btn.disabled = false;
-          btn.innerHTML = "⚙️ Registrar trabajo";
-        }
-      })
-      .catch(function() {
-        alert("❌ Error de conexión. Revisá tu internet.");
-        btn.disabled = false;
-        btn.innerHTML = "⚙️ Registrar trabajo";
-      });
-  }
-
-  function reiniciar() {
-    document.getElementById("pantalla-exito").style.display = "none";
-    document.getElementById("formulario").style.display = "block";
-    document.getElementById("fecha").valueAsDate = new Date();
-    ["encargado","cliente","descripcion","material","cantidad",
-     "largo","ancho","alto","dobleces","precio","observaciones","fecha-entrega"]
-      .forEach(function(id) { document.getElementById(id).value = ""; });
-    document.getElementById("entrega").value = "0";
-    document.querySelector('input[name="condicion"][value="Contado"]').checked = true;
-    toggleEntrega();
-    var btn = document.getElementById("btn-enviar");
-    btn.disabled = false;
-    btn.innerHTML = "⚙️ Registrar trabajo";
-  }
+function reiniciar(){
+document.getElementById(“exito”).style.display=“none”;
+document.getElementById(“form”).style.display=“block”;
+document.getElementById(“fecha”).valueAsDate=new Date();
+[“encargado”,“cliente”,“descripcion”,“material”,“cantidad”,“largo”,“ancho”,“alto”,“dobleces”,“precio”,“entrega”,“obs”,“fecha-entrega”]
+.forEach(function(id){document.getElementById(id).value=””;});
+document.querySelector(‘input[name=“cond”][value=“Contado”]’).checked=true;
+toggleEntrega();
+var btn=document.getElementById(“btn-env”);
+btn.disabled=false;
+btn.innerHTML=“⚙️ Registrar trabajo”;
+}
 </script>
+
 </body>
 </html>
