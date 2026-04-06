@@ -163,6 +163,31 @@
     .spinner { display: inline-block; width: 18px; height: 18px; border: 3px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 8px; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* ── Gastos múltiples ── */
+    .gasto-item {
+      border: 1.5px solid var(--borde); border-radius: 10px;
+      padding: 14px 16px; margin-bottom: 10px; background: #FDFEFE; position: relative;
+    }
+    .gasto-item .gasto-num {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--sub); margin-bottom: 10px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .btn-eliminar-gasto {
+      background: #FADBD8; color: var(--danger); border: none; border-radius: 6px;
+      padding: 3px 10px; font-size: 0.8rem; font-weight: 700; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn-agregar-gasto {
+      width: 100%; padding: 12px; border: 2px dashed var(--borde);
+      border-radius: 10px; background: #fff; font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; font-weight: 700; color: var(--sub); cursor: pointer;
+      transition: all 0.2s; margin-bottom: 0;
+    }
+    .btn-agregar-gasto:hover { border-color: #aaa; color: var(--texto); background: #F8F9FA; }
+    .btn-agregar-gasto.laser-ag { border-color: var(--laser); color: var(--laser); }
+    .btn-agregar-gasto.corte-ag { border-color: var(--verde); color: var(--verde); }
+
     #form-cuerpo { display: none; }
   </style>
 </head>
@@ -234,19 +259,30 @@
           <input type="number" id="transferencias" placeholder="0" min="0" value="0" oninput="calcSaldoFinal()" />
         </div>
       </div>
-      <div class="grid2">
-        <div class="campo">
-          <label>Gastos del día (Gs)</label>
-          <input type="number" id="gastos" placeholder="0" min="0" value="0" oninput="calcSaldoFinal()" />
-        </div>
-        <div class="campo">
-          <label>Retiro del día (Gs)</label>
-          <input type="number" id="retiro" placeholder="0" min="0" value="0" oninput="calcSaldoFinal()" />
-        </div>
+      <div class="campo">
+        <label>Retiro del día (Gs)</label>
+        <input type="number" id="retiro" placeholder="0" min="0" value="0" oninput="calcSaldoFinal()" />
       </div>
       <div class="campo">
         <label>Observaciones</label>
         <input type="text" id="observaciones" placeholder="Notas del día (opcional)" />
+      </div>
+    </div>
+
+    <!-- GASTOS DEL DÍA -->
+    <div class="card" id="card-gastos">
+      <div class="card-title" id="title-gastos">💸 Gastos del día</div>
+      <p style="font-size:0.85rem;color:var(--sub);margin-bottom:14px;">Agregá cada gasto por separado con su detalle.</p>
+
+      <div id="gastos-lista"></div>
+
+      <button type="button" class="btn-agregar-gasto" id="btn-agregar-gasto" onclick="agregarGasto()">
+        + Agregar gasto
+      </button>
+
+      <div class="total-creditos" id="total-gastos-box" style="margin-top:12px;">
+        <span>Total gastos del día:</span>
+        <strong id="total-gastos-texto">Gs. 0</strong>
       </div>
     </div>
 
@@ -269,7 +305,7 @@
 </div>
 
 <script>
-  var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyeLmGL7IuvlzFia0lwlIaFmw62mH9HtBPDKAWx6k17CWp7tPxhYtbMvacs91NsIww2/exec";
+  var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6L4spCxrYOk_luNvBw1AiqL-uw4mWGWM--kJg8Y1PXTTbsDVrAJoTsdnXldseOYHG/exec";
   var empresaActual = "";
   var creditosPendientes = [];
   var creditosSeleccionados = {};
@@ -380,9 +416,92 @@
 
   function n(id) { return parseFloat(document.getElementById(id).value) || 0; }
 
+  // ── Gastos múltiples ─────────────────────────────────────────
+  var gastosLista = [];
+  var gastoContador = 0;
+  var CATEGORIAS = ["Insumos","Materiales","Servicios","Transporte","Mantenimiento","Limpieza","Otros"];
+
+  function agregarGasto() {
+    var esLaser = empresaActual === "LASER";
+    var suf = esLaser ? "laser" : "corte";
+    var id = ++gastoContador;
+    gastosLista.push(id);
+
+    var opsCat = CATEGORIAS.map(function(c) {
+      return '<option value="' + c + '">' + c + '</option>';
+    }).join("");
+
+    var html = '<div class="gasto-item" id="gasto-' + id + '">' +
+      '<div class="gasto-num"><span>💸 Gasto #' + gastosLista.length + '</span>' +
+      '<button class="btn-eliminar-gasto" onclick="eliminarGasto(' + id + ')">✕ Eliminar</button></div>' +
+      '<div class="grid2">' +
+        '<div class="campo"><label>Concepto *</label>' +
+        '<input type="text" id="g_concepto_' + id + '" placeholder="Ej: Compra de insumos" /></div>' +
+        '<div class="campo"><label>Categoría</label>' +
+        '<select id="g_categoria_' + id + '" style="appearance:auto">' + opsCat + '</select></div>' +
+      '</div>' +
+      '<div class="grid2">' +
+        '<div class="campo"><label>Proveedor</label>' +
+        '<input type="text" id="g_proveedor_' + id + '" placeholder="Nombre del proveedor" /></div>' +
+        '<div class="campo"><label>N° Factura</label>' +
+        '<input type="text" id="g_factura_' + id + '" placeholder="Ej: 001-001-0000123" /></div>' +
+      '</div>' +
+      '<div class="campo"><label>Monto (Gs) *</label>' +
+      '<input type="number" id="g_monto_' + id + '" placeholder="0" min="0" value="0" oninput="calcTotalGastos()" /></div>' +
+    '</div>';
+
+    document.getElementById("gastos-lista").insertAdjacentHTML("beforeend", html);
+    calcTotalGastos();
+
+    // color del botón agregar
+    var btnAg = document.getElementById("btn-agregar-gasto");
+    btnAg.className = "btn-agregar-gasto " + suf + "-ag";
+  }
+
+  function eliminarGasto(id) {
+    var el = document.getElementById("gasto-" + id);
+    if (el) el.remove();
+    gastosLista = gastosLista.filter(function(x) { return x !== id; });
+    // renumerar visualmente
+    document.querySelectorAll(".gasto-item").forEach(function(el, i) {
+      el.querySelector(".gasto-num span").textContent = "💸 Gasto #" + (i + 1);
+    });
+    calcTotalGastos();
+  }
+
+  function calcTotalGastos() {
+    var total = 0;
+    gastosLista.forEach(function(id) {
+      var el = document.getElementById("g_monto_" + id);
+      if (el) total += parseFloat(el.value) || 0;
+    });
+    document.getElementById("total-gastos-texto").textContent = "Gs. " + total.toLocaleString("es-PY");
+    var esLaser = empresaActual === "LASER";
+    var suf = esLaser ? "laser" : "corte";
+    var box = document.getElementById("total-gastos-box");
+    box.className = "total-creditos" + (total > 0 ? " act-" + suf : "");
+    window._totalGastos = total;
+    calcSaldoFinal();
+  }
+
+  function getGastosDetalle() {
+    var lista = [];
+    gastosLista.forEach(function(id) {
+      var concepto  = (document.getElementById("g_concepto_"  + id) || {}).value || "";
+      var categoria = (document.getElementById("g_categoria_" + id) || {}).value || "";
+      var proveedor = (document.getElementById("g_proveedor_" + id) || {}).value || "";
+      var factura   = (document.getElementById("g_factura_"   + id) || {}).value || "";
+      var monto     = parseFloat((document.getElementById("g_monto_" + id) || {}).value) || 0;
+      if (concepto || monto > 0) {
+        lista.push({ concepto: concepto, categoria: categoria, proveedor: proveedor, factura: factura, monto: monto });
+      }
+    });
+    return lista;
+  }
+
   function calcSaldoFinal() {
     var total = n("saldo_anterior") + n("cobros_contado") + (window._totalCreditos||0) + n("transferencias")
-              - n("gastos") - n("retiro");
+              - (window._totalGastos||0) - n("retiro");
     document.getElementById("saldo-final-texto").textContent = "Gs. " + total.toLocaleString("es-PY");
     window._saldoFinal = total;
   }
@@ -403,6 +522,10 @@
                descripcion: c.descripcion, fecha_credito: c.fecha };
     }));
 
+    var gastosDetalle = getGastosDetalle();
+    var gastosJSON = JSON.stringify(gastosDetalle);
+    var totalGastos = window._totalGastos || 0;
+
     var params = new URLSearchParams({
       tipo_formulario:   "cierre_metalin",
       empresa:           empresaActual,
@@ -412,11 +535,12 @@
       cobros_contado:    n("cobros_contado"),
       creditos_cobrados: window._totalCreditos || 0,
       transferencias:    n("transferencias"),
-      gastos:            n("gastos"),
+      gastos:            totalGastos,
       retiro:            n("retiro"),
       saldo_final:       window._saldoFinal || 0,
       observaciones:     document.getElementById("observaciones").value.trim(),
       creditos_detalle:  creditosJSON,
+      gastos_detalle:    gastosJSON,
       _t:                Date.now()
     });
 
@@ -457,11 +581,16 @@
     document.getElementById("fecha").valueAsDate = new Date();
     document.getElementById("encargado").value = "";
     document.getElementById("observaciones").value = "";
-    ["saldo_anterior","cobros_contado","transferencias","gastos","retiro"]
+    ["saldo_anterior","cobros_contado","transferencias","retiro"]
       .forEach(function(id) { document.getElementById(id).value = "0"; });
     document.getElementById("saldo-final-texto").textContent = "Gs. 0";
     document.getElementById("total-creditos-texto").textContent = "Gs. 0";
-    document.getElementById("total-creditos-box").className = "total-creditos";
+    document.getElementById("gastos-lista").innerHTML = "";
+    document.getElementById("total-gastos-texto").textContent = "Gs. 0";
+    document.getElementById("total-gastos-box").className = "total-creditos";
+    gastosLista = [];
+    gastoContador = 0;
+    window._totalGastos = 0;
     document.getElementById("creditos-lista").innerHTML =
       '<div class="creditos-loading">⏳ Seleccioná la empresa para ver los créditos pendientes...</div>';
     document.getElementById("btn-laser").className = "emp-btn";
